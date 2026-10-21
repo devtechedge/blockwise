@@ -16,7 +16,9 @@ let checked = 0;
 if (existsSync("evidence/fixtures.sha256")) {
   for (const line of readFileSync("evidence/fixtures.sha256", "utf8").split("\n")) {
     if (!line.trim()) continue;
-    const [hash, file] = line.split(/\s+/);
+    const m = line.match(/^([0-9a-f]{64}) [ *](.+)$/);
+    if (!m) { fail("bad manifest line " + line); continue; }
+    const [, hash, file] = m;
     const got = createHash("sha256").update(readFileSync(file)).digest("hex");
     if (got !== hash) fail(`${file} hash ${got} != ${hash}`); else checked++;
   }
