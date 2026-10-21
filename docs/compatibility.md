@@ -2,7 +2,7 @@
 
 What Blockwise reads and writes for each Notion surface, and how each cell is verified. "Tested" means a Vitest or Playwright test runs in CI. "Fixture" means the test input is a hand built or schema generated file whose SHA-256 is pinned in `evidence/fixtures.sha256`; none are live captures from a signed in Notion account.
 
-Legend: ✅ round trips, 🟡 partial (see notes), ➖ not supported.
+Legend: ✅ implemented and round trips, 🟡 partial (see notes), ➖ not supported. The package tests cover the main path for each column; not every cell has its own dedicated test.
 
 ## Block types
 
