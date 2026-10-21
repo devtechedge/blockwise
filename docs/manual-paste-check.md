@@ -39,10 +39,11 @@ Run 3 (2026-10-22, Notion web): inline equations rendered natively and every blo
 
 Run 4 (2026-10-22, Notion web, after Reset demo): the rich text line pasted with plain Ctrl+V. "colour" arrived as orange text and "highlight" with a yellow background. Bold, italic, underline, strike, inline code, link and the inline equation were all native. The only oddity was the trailing period after the equation wrapping onto its own line, most likely page width. Text colors, background highlights and inline equations are verified live. Block colors are still unchecked.
 
-## Block color check (pending)
+## Block color check
 
 1. Open https://blockwise-cyan.vercel.app, click Reset demo, and find the blue background paragraph starting "Block color" under "Every block type".
 2. To set a color yourself: hover a block, click the handle on its left (or right click it), choose Color, and pick one of the 10 text colors or 10 background colors. Shift click more handles first to color several blocks at once; `Ctrl+Z` undoes it.
 3. Click that block's handle so it is selected, press `Esc` to close the menu, press `Ctrl+C`, and paste into a Notion page with plain `Ctrl+V`.
 4. Expected: the whole block arrives with the same block color (text color or background).
 
+Run 5 (2026-10-22, IST, Notion web, after Reset demo): PASS. Copied two blocks from the live demo at https://blockwise-cyan.vercel.app, a paragraph set to Color > Red and a paragraph set to Color > Blue background, both from inside a column layout, and pasted them with plain `Ctrl+V` into a new Notion page body. Red text arrived as native red text with no background; blue background arrived as native blue background with default text. Note: the column layout is not carried when copying blocks out of a column; they paste as top-level paragraphs one under the other. Test page moved to Trash. Block colors are verified live.
