@@ -87,6 +87,22 @@ importers:
         specifier: ^3.2.4
         version: 3.2.7(@types/node@22.20.5)
 
+  packages/notion-sync:
+    dependencies:
+      '@blockwise/core':
+        specifier: workspace:*
+        version: link:../core
+      '@notionhq/client':
+        specifier: ^5.3.0
+        version: 5.27.1
+    devDependencies:
+      typescript:
+        specifier: ^5.6.3
+        version: 5.9.3
+      vitest:
+        specifier: ^3.2.4
+        version: 3.2.7(@types/node@22.20.5)
+
 packages:
 
   '@esbuild/aix-ppc64@0.28.2':
@@ -253,6 +269,10 @@ packages:
     engines: {node: ^22.20 || ^24.12 || >=25}
     cpu: [x64]
     os: [linux]
+
+  '@notionhq/client@5.27.1':
+    resolution: {integrity: sha512-WedYyPNMpQbE4Dz5h7zHTsh03veUGqBzxWyztbIh0tNbgHU+XbDi/jc1KgL3j1p8y06nHLEmGYygntwICxJUNw==}
+    engines: {node: '>=18'}
 
   '@rollup/rollup-android-arm-eabi@4.64.12':
     resolution: {integrity: sha512-Z8lz+5UOiCJLonjeqwJlhUtHA/Sr6R1AidkccQxdWF0nigNzP81aLoU+udgOaGfL5s1uzFXzcux/pCwGAMu0lw==}
@@ -804,6 +824,8 @@ snapshots:
 
   '@napi-rs/lzma-linux-x64-gnu@1.5.1':
     optional: true
+
+  '@notionhq/client@5.27.1': {}
 
   '@rollup/rollup-android-arm-eabi@4.64.12':
     optional: true
