@@ -1,7 +1,7 @@
 import type { BlockType, Doc } from "./blocks.js";
 import { TEXT_TYPES } from "./blocks.js";
 import { getBlock, indexInParent, opInsert, opMove, opRemove, opUpdate, type Op } from "./doc.js";
-import { concat, length, splitAt, type RichText } from "./rich-text.js";
+import { concat, length, splitAt, type Color, type RichText } from "./rich-text.js";
 import { uuid } from "./ids.js";
 
 /**
@@ -99,7 +99,8 @@ export function outdent(doc: Doc, id: string): CommandResult {
 
 export function turnInto(doc: Doc, id: string, type: BlockType): CommandResult {
   const b = getBlock(doc, id);
-  const props = type === "to_do" ? { checked: Boolean(b.props.checked) } : type === "code" ? { language: b.props.language ?? "plain text" } : type === "callout" ? { icon: b.props.icon ?? "\u{1F4A1}" } : {};
+  const base = type === "to_do" ? { checked: Boolean(b.props.checked) } : type === "code" ? { language: b.props.language ?? "plain text" } : type === "callout" ? { icon: b.props.icon ?? "\u{1F4A1}" } : {};
+  const props = b.props.color ? { ...base, color: b.props.color } : base;
   return { ops: [opUpdate(doc, id, { type, props })], focus: { id, offset: -1 } };
 }
 
@@ -139,4 +140,12 @@ export function duplicate(doc: Doc, id: string): CommandResult {
   const input = clone(id);
   const op = opInsert(doc, b.parent, indexInParent(doc, id) + 1, input);
   return { ops: [op], focus: { id: (op as { blocks: { id: string }[] }).blocks[0]!.id, offset: 0 } };
+}
+
+/** Set (or clear with "default") the block color of every listed block, as one batch of ops. */
+export function setBlockColor(doc: Doc, ids: string[], color: Color | "default"): Op[] {
+  return ids.map((id) => {
+    const { color: _old, ...rest } = getBlock(doc, id).props;
+    return opUpdate(doc, id, { props: color === "default" ? rest : { ...rest, color } });
+  });
 }

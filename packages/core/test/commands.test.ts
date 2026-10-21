@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { backspaceAtStart, duplicate, indent, markdownShortcut, outdent, splitBlock, turnInto } from "../src/commands.js";
+import { backspaceAtStart, duplicate, indent, markdownShortcut, outdent, splitBlock, turnInto, setBlockColor } from "../src/commands.js";
 import { buildDoc, getBlock, toInput } from "../src/doc.js";
-import { applyOps } from "../src/history.js";
+import { applyOps, commit, initState, undo } from "../src/history.js";
 import { seedIds } from "../src/ids.js";
 import { text } from "../src/rich-text.js";
 import type { Doc } from "../src/blocks.js";
@@ -70,5 +70,32 @@ describe("commands", () => {
     expect(getBlock(n, kids(d)[0]!).props.icon).toBeDefined();
     n = applyOps(n, duplicate(n, kids(n)[0]!).ops);
     expect(shape(n)?.[0]).toEqual(shape(n)?.[1]);
+  });
+});
+
+describe("setBlockColor", () => {
+  const mk = () => buildDoc("t", [{ type: "paragraph", text: text("a") }, { type: "heading_2", text: text("b"), props: { color: "red" } }]);
+  it("colors every listed block and clears with default", () => {
+    const d = mk();
+    const ids = getBlock(d, d.rootId).children;
+    let n = applyOps(d, setBlockColor(d, ids, "blue_background"));
+    expect(ids.map((id) => getBlock(n, id).props.color)).toEqual(["blue_background", "blue_background"]);
+    n = applyOps(n, setBlockColor(n, ids, "default"));
+    expect(ids.map((id) => getBlock(n, id).props.color)).toEqual([undefined, undefined]);
+  });
+  it("keeps other props and survives turn into", () => {
+    let d = buildDoc("t", [{ type: "to_do", text: text("a"), props: { checked: true } }]);
+    const id = getBlock(d, d.rootId).children[0]!;
+    d = applyOps(d, setBlockColor(d, [id], "green"));
+    expect(getBlock(d, id).props).toEqual({ checked: true, color: "green" });
+    d = applyOps(d, turnInto(d, id, "heading_1").ops);
+    expect(getBlock(d, id).props.color).toBe("green");
+  });
+  it("is one undo step for a multi block selection", () => {
+    const d = mk();
+    const ids = getBlock(d, d.rootId).children;
+    const s1 = commit(initState(d), setBlockColor(d, ids, "purple"));
+    const s0 = undo(s1);
+    expect(ids.map((id) => getBlock(s0.doc, id).props.color)).toEqual([undefined, "red"]);
   });
 });
