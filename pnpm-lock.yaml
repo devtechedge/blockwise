@@ -33,6 +33,22 @@ importers:
         specifier: ^3.2.4
         version: 3.2.7(@types/node@22.20.5)
 
+  packages/database:
+    dependencies:
+      '@blockwise/core':
+        specifier: workspace:*
+        version: link:../core
+    devDependencies:
+      fake-indexeddb:
+        specifier: ^6
+        version: 6.2.6
+      typescript:
+        specifier: ^5.6.3
+        version: 5.9.3
+      vitest:
+        specifier: ^3.2.4
+        version: 3.2.7(@types/node@22.20.5)
+
   packages/notion-format:
     dependencies:
       '@blockwise/core':
