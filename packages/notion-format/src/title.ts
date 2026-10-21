@@ -11,6 +11,13 @@ export type TitleArray = TitleSegment[];
 
 export const EQUATION_PLACEHOLDER = "\u204d";
 
+/**
+ * Notion's internal palette calls green "teal" (paste parser color list,
+ * evidence/README.md). Blockwise and the public API say "green".
+ */
+export function toNotionColor(c: string): string { return c.replace(/^green(?=$|_)/, "teal"); }
+export function fromNotionColor(c: string): string { return c.replace(/^teal(?=$|_)/, "green"); }
+
 export function toTitle(rt: RichText): TitleArray {
   return normalize(rt).map((s): TitleSegment => {
     const a: Annotation[] = [];
@@ -27,7 +34,7 @@ export function toTitle(rt: RichText): TitleArray {
     if (mk.strike) a.push(["s"]);
     if (mk.underline) a.push(["_"]);
     if (mk.code) a.push(["c"]);
-    if (mk.color) a.push(["h", mk.color]);
+    if (mk.color) a.push(["h", toNotionColor(mk.color)]);
     if (mk.link) a.push(["a", mk.link]);
     const t = s.mention ? MENTION_PLACEHOLDER : s.equation !== undefined ? EQUATION_PLACEHOLDER : s.text;
     return a.length ? [t, a] : [t];
@@ -50,7 +57,7 @@ export function fromTitle(title: unknown): RichText {
         case "s": marks.strike = true; break;
         case "_": marks.underline = true; break;
         case "c": marks.code = true; break;
-        case "h": marks.color = a[1] as Marks["color"]; break;
+        case "h": marks.color = fromNotionColor(String(a[1])) as Marks["color"]; break;
         case "a": marks.link = String(a[1]); break;
         case "e": span.equation = String(a[1]); span.text = String(a[1]); break;
         case "p": span.mention = { kind: "page", id: String(a[1]) }; break;

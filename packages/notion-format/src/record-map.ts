@@ -1,6 +1,6 @@
 import type { Block, BlockInput, BlockType, Doc, RichText } from "@blockwise/core";
 import { getBlock, uuid } from "@blockwise/core";
-import { fromTitle, toTitle, type TitleArray } from "./title.js";
+import { fromNotionColor, fromTitle, toNotionColor, toTitle, type TitleArray } from "./title.js";
 
 /** Notion internal block type names, as found in the web bundle. */
 export const TO_NOTION: Record<BlockType, string> = {
@@ -56,7 +56,7 @@ function blockToRecord(b: Block, idOf: (id: string) => string, parentId: string,
   if (b.type === "code") props.language = [[notionLanguage(p.language)]];
   if (b.type === "image" && p.url) { props.source = [[p.url]]; format.display_source = p.url; }
   if (p.caption?.length) props.caption = toTitle(p.caption);
-  if (p.color) format.block_color = p.color;
+  if (p.color) format.block_color = toNotionColor(p.color);
   if (b.type === "callout") format.page_icon = p.icon ?? "\u{1F4A1}";
   if (b.type === "page" && p.icon) format.page_icon = p.icon;
   if (b.type === "column" && p.ratio !== undefined) format.column_ratio = p.ratio;
@@ -123,7 +123,7 @@ export function recordToInput(get: (id: string) => NotionRecord | undefined, id:
   if (type === "code") p.language = ourLanguage(String(props.language?.[0]?.[0] ?? "Plain Text"));
   if (type === "image") { const src = String(props.source?.[0]?.[0] ?? format.display_source ?? ""); if (src) p.url = src; }
   if (props.caption) { const c: RichText = fromTitle(props.caption); if (c.length) p.caption = c; }
-  if (typeof format.block_color === "string" && format.block_color !== "default") p.color = format.block_color as never;
+  if (typeof format.block_color === "string" && format.block_color !== "default") p.color = fromNotionColor(format.block_color) as never;
   if ((type === "callout" || type === "page") && typeof format.page_icon === "string") p.icon = format.page_icon;
   if (type === "column" && typeof format.column_ratio === "number") p.ratio = format.column_ratio;
   let children = kids;
