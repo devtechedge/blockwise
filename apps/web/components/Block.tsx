@@ -7,6 +7,7 @@ import { setUi, useUi, getUi } from "@/lib/ui";
 import { TextBlock } from "./TextBlock";
 import { DatabaseView } from "./DatabaseView";
 import { CellEditor } from "./CellEditor";
+import { openBlockMenu } from "./BlockMenu";
 
 const LANGS = ["plain text", "bash", "c", "c++", "c#", "css", "go", "html", "java", "javascript", "json", "kotlin", "markdown", "python", "ruby", "rust", "shell", "sql", "swift", "typescript", "yaml"];
 
@@ -126,16 +127,25 @@ export const BlockView = memo(function BlockView({ doc, block }: { doc: Doc; blo
           const op = opInsert(doc, b.parent!, indexInParent(doc, b.id) + 1, { type: "paragraph" });
           apply([op], undefined, { id: (op as { blocks: { id: string }[] }).blocks[0]!.id, offset: 0 });
         }}>+</button>
-        <span className="handle" draggable title="Drag to move, click to select" aria-label="Drag handle" role="button" tabIndex={-1}
+        <span className="handle" draggable title="Drag to move, click for the block menu" aria-label="Drag handle" role="button" tabIndex={-1}
           onDragStart={(e) => onDragStart(e, b.id)}
           onDragEnd={() => setUi({ dragging: null, drop: null })}
+          aria-haspopup="menu"
           onClick={(e) => {
             const sel = getState().selection;
-            setSelection(e.shiftKey && sel.length ? [...sel, b.id] : [b.id]);
+            if (e.shiftKey && sel.length) { setSelection([...sel, b.id]); return; }
+            if (!sel.includes(b.id)) setSelection([b.id]);
             (document.activeElement as HTMLElement | null)?.blur();
+            openBlockMenu(b.id, e.currentTarget);
+          }}
+          onContextMenu={(e) => {
+            e.preventDefault();
+            if (!getState().selection.includes(b.id)) setSelection([b.id]);
+            (document.activeElement as HTMLElement | null)?.blur();
+            openBlockMenu(b.id, e.currentTarget);
           }}>{"\u22EE\u22EE"}</span>
       </div>
-      <div className="block-content">{content}</div>
+      <div className={`block-content${b.props.color && b.type !== "callout" ? " block-color-" + b.props.color : ""}`}>{content}</div>
     </div>
   );
 });

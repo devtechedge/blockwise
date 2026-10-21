@@ -7,9 +7,10 @@ export interface UiState {
   slash: { blockId: string; start: number; query: string; x: number; y: number; index: number } | null;
   drop: { id: string; pos: "before" | "after" | "inside" } | null;
   dragging: string | null;
+  blockMenu: { id: string; x: number; y: number; sub: "turn" | "color" | null } | null;
 }
 
-let ui: UiState = { slash: null, drop: null, dragging: null };
+let ui: UiState = { slash: null, drop: null, dragging: null, blockMenu: null };
 const ls = new Set<() => void>();
 export function getUi(): UiState { return ui; }
 export function setUi(p: Partial<UiState>): void { ui = { ...ui, ...p }; ls.forEach((l) => l()); }

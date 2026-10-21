@@ -4,6 +4,7 @@ import { getBlock, pageTitle, opInsert, opUpdate, plain, type Doc } from "@block
 import { apply, getState, redo, setSelection, undo, useApp } from "@/lib/store";
 import { copySelection, deleteSelection, isInlinePaste, pasteAtTop, duplicateSelection, moveSelection, pasteBlocks, readClipboard, topLevelSelection } from "@/lib/actions";
 import { BlockList } from "./Block";
+import { BlockMenu } from "./BlockMenu";
 import { SlashMenu } from "./SlashMenu";
 import { InlineToolbar } from "./InlineToolbar";
 import { ThemeToggle } from "./ThemeToggle";
@@ -58,7 +59,7 @@ export function Editor({ doc }: { doc: Doc }) {
     };
     const onMouseDown = (e: MouseEvent) => {
       const t = e.target as HTMLElement;
-      if (getState().selection.length && !t.closest(".handle")) setSelection([]);
+      if (getState().selection.length && !t.closest(".handle, .block-menu")) setSelection([]);
     };
     document.addEventListener("keydown", onKey);
     document.addEventListener("copy", onCopy);
@@ -123,6 +124,7 @@ export function Editor({ doc }: { doc: Doc }) {
       </div>
       <div className="page-tail" onClick={addAtEnd} aria-hidden />
       <SlashMenu />
+      <BlockMenu />
       <InlineToolbar />
     </main>
   );

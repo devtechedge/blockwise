@@ -1,8 +1,8 @@
 "use client";
 import {
   backspaceAtStart, duplicate, flatten, getBlock, indent, indexInParent, length, markdownShortcut, opInsert, opRemove,
-  opUpdate, outdent, plain, splitBlock, turnInto, uuid, TEXT_TYPES, createDoc,
-  type BlockInput, type BlockType, type Doc, type Op,
+  opUpdate, outdent, plain, setBlockColor, splitBlock, turnInto, uuid, TEXT_TYPES, createDoc,
+  type BlockInput, type BlockType, type Color, type Doc, type Op,
 } from "@blockwise/core";
 import { addPage, applyOp, deleteRange } from "@blockwise/core";
 import { createDatabase, addProperty } from "@blockwise/database";
@@ -157,6 +157,23 @@ export function duplicateSelection(): void {
   let cur = d;
   for (const id of [...ids].reverse()) { const r = duplicate(cur, id); for (const op of r.ops) { ops.push(op); cur = applyOp(cur, op); } }
   apply(ops);
+}
+
+/** Block menu Color: every selected block (nested ones included), one undo step. */
+export function colorSelection(color: Color | "default"): void {
+  const d = doc();
+  const ids = getState().selection.filter((id) => d.blocks[id]);
+  if (ids.length) apply(setBlockColor(d, ids, color));
+}
+
+/** Block menu Turn into: every selected text block, one undo step. */
+export function turnSelectionInto(type: BlockType): void {
+  const d = doc();
+  const ids = topLevelSelection(d, getState().selection).filter((id) => TEXT_TYPES.has(getBlock(d, id).type));
+  const ops: Op[] = [];
+  let cur = d;
+  for (const id of ids) for (const op of turnInto(cur, id, type).ops) { ops.push(op); cur = applyOp(cur, op); }
+  if (ops.length) apply(ops);
 }
 
 export function moveSelection(dir: -1 | 1, extend: boolean): void {
