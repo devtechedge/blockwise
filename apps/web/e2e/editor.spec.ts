@@ -77,7 +77,8 @@ test("copying a block selection writes Notion and plain text flavours", async ({
   });
   expect(data["text/plain"]).toContain("beta");
   expect(data["text/html"]).toContain("beta");
-  const v3 = JSON.parse(data["text/_notion-blocks-v3-production"]!);
+  expect(data["text/_notion-blocks-v3-production"]).toBeUndefined();
+  const v3 = JSON.parse(data["application/x-blockwise-blocks-v3"]!);
   expect(v3.blocks[0].blockSubtree.__version__).toBe(3);
 });
 
@@ -114,4 +115,33 @@ test("proxy refuses non page endpoints", async ({ request }) => {
   expect(r.status()).toBe(404);
   const r2 = await request.get("/api/notion/v1/pages/0123456789abcdef0123456789abcdef");
   expect(r2.status()).toBe(401);
+});
+
+test("pasting several blocks into the title puts them in the body", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "+ New page" }).click();
+  await page.keyboard.type("Title stays");
+  await page.evaluate(() => {
+    const dt = new DataTransfer();
+    dt.setData("text/html", "<h2>Pasted</h2><details><summary>Toggle</summary><p>inside</p></details>");
+    dt.setData("text/plain", "## Pasted\n- Toggle\n  inside");
+    document.querySelector(".page-title")!.dispatchEvent(new ClipboardEvent("paste", { clipboardData: dt, bubbles: true, cancelable: true }));
+  });
+  await expect(page.locator(".page-title")).toHaveText("Title stays");
+  await expect(page.locator(".blocks .text-block.h2")).toHaveText("Pasted");
+  await expect(page.locator('.blocks [data-type="toggle"]')).toHaveCount(1);
+});
+
+test("copied toggles and highlights survive a paste back", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "+ New page" }).click();
+  await page.keyboard.type("Round trip");
+  await page.keyboard.press("Enter");
+  await page.evaluate(() => {
+    const dt = new DataTransfer();
+    dt.setData("text/html", '<details><summary>T</summary><p>child</p></details><p><span style="background-color:#fbf3db">hi</span></p>');
+    document.activeElement!.dispatchEvent(new ClipboardEvent("paste", { clipboardData: dt, bubbles: true, cancelable: true }));
+  });
+  await expect(page.locator('.blocks [data-type="toggle"]')).toHaveCount(1);
+  await expect(page.locator(".blocks .c-yellow_background, .blocks [class*=yellow_background]").first()).toHaveText("hi");
 });
