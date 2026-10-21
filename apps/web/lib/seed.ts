@@ -15,6 +15,7 @@ export function seedWorkspace(): Workspace {
     { type: "to_do", text: t("Drag the handle on the left of a block to move it"), props: { checked: true } },
     { type: "heading_2", text: t("Every block type") },
     { type: "paragraph", text: [{ text: "Rich text: " }, { text: "bold", marks: { bold: true } }, { text: ", " }, { text: "italic", marks: { italic: true } }, { text: ", " }, { text: "underline", marks: { underline: true } }, { text: ", " }, { text: "strike", marks: { strike: true } }, { text: ", " }, { text: "code", marks: { code: true } }, { text: ", " }, { text: "colour", marks: { color: "orange" } }, { text: ", " }, { text: "highlight", marks: { color: "yellow_background" } }, { text: ", " }, { text: "a link", marks: { link: "https://github.com/devtechedge/blockwise" } }, { text: " and an equation " }, { text: "e^{i\\pi}+1=0", equation: "e^{i\\pi}+1=0" }, { text: "." }] },
+    { type: "paragraph", text: t("Block color: this whole block has a blue background. Click the handle on its left, choose Color, and pick another."), props: { color: "blue_background" } },
     { type: "bulleted_list_item", text: t("Bulleted list"), children: [{ type: "bulleted_list_item", text: t("Nested with Tab") }] },
     { type: "numbered_list_item", text: t("Numbered list") },
     { type: "numbered_list_item", text: t("Keeps counting") },
