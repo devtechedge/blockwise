@@ -74,8 +74,9 @@ Mentions use the text `‣` (U+2023) as their placeholder. The codes come from a
 
 ## What Blockwise does
 
-- Copy writes all of: `text/_notion-blocks-v3-production` (synthesised record map, fresh UUIDs, `spaceId` and `role` filled with neutral values), `text/html` (semantic HTML matching the export renderer's element choices) and `text/plain` (Markdown).
-- Paste prefers `text/_notion-blocks-v3-production`, then `text/html`, then `text/plain`.
+- Copy writes `application/x-blockwise-blocks-v3` (the same v3 selection payload: synthesised record map, fresh UUIDs, neutral `spaceId` and `role`), `text/html` and `text/plain` (Markdown). Writing the payload under `text/_notion-blocks-v3-production` is opt in (`notionPayload`), because a live check on 2026-10-22 showed Notion's web app swallowing a plain Ctrl+V with it.
+- The clipboard HTML differs from the export dialect in two places: a toggle is a bare `<details><summary>` (Notion's paste reads `<ul class="toggle"><li><details>` as a bulleted item), and colors carry inline `color` or `background-color` styles next to the `highlight-*` class.
+- Paste prefers `text/_notion-blocks-v3-production`, then `application/x-blockwise-blocks-v3`, then `text/html` (classes, inline styles and `<mark>` map to the nearest Notion color), then `text/plain`.
 - Serialisation is deterministic so fixtures can be compared byte for byte.
 
 ## Quirks

@@ -34,7 +34,7 @@ A local first, open source block editor whose content moves cleanly to and from 
 
 - **Block editor**: headings, lists, to-dos, toggles, quotes, callouts, code, equations, images, simple tables, columns, sub pages and inline databases
 - **Fast editing**: slash menu, Markdown shortcuts, inline formatting toolbar, drag to reorder, keyboard block selection, undo and redo
-- **Clipboard bridge**: copies Notion's block payload alongside HTML and plain text, and pastes any of the three ([format spec](docs/specs/clipboard.md))
+- **Clipboard bridge**: copies blocks as Notion friendly HTML and Markdown, and pastes Notion's own block data, HTML or text ([format spec](docs/specs/clipboard.md))
 - **Import and export**: Notion "Markdown & CSV" and "HTML" export zips, in both directions ([format spec](docs/specs/export.md))
 - **Databases**: typed properties, filters, sorts and Notion CSV round trips ([spec](docs/specs/database.md))
 - **Optional API sync**: push or pull pages with the official Notion API from the app or a CLI ([spec](docs/specs/sync.md))
