@@ -219,7 +219,7 @@ function parseBlock(e: HTMLElement): BlockInput[] {
     case "pre": {
       const raw = e.innerHTML;
       const lm = raw.match(/class="[^"]*language-([^"\s]+)/) ?? (e.getAttribute("class") ?? "").match(/language-([^"\s]+)/);
-      const lang = lm ? lm[1]!.replace(/-/g, " ") : "plain text";
+      const lang = lm ? lm[1]!.replace(/-/g, " ").toLowerCase() : "plain text";
       const txt = decodeEntities(raw.replace(/<br\s*\/?>/gi, "\n").replace(/<[^>]+>/g, "")).replace(/\n$/, "");
       return [{ type: "code", text: txt ? [{ text: txt }] : [], props: { language: lang || "plain text" } }];
     }
@@ -272,11 +272,11 @@ function parseBlock(e: HTMLElement): BlockInput[] {
       return items.flatMap((li): BlockInput[] => {
         const details = li.childNodes.find((n) => el(n)?.tagName?.toLowerCase() === "details");
         if (c.includes("toggle") || (details && li.childNodes.filter((n) => el(n) || n.text.trim()).length === 1)) return details ? parseBlock(el(details)!) : [{ type: "toggle", text: htmlInline(li.childNodes) }];
-        const box = li.querySelector("input");
-        const isTodo = c.includes("to-do-list") || (box && box.getAttribute("type") === "checkbox" && li.childNodes.indexOf(box) <= 1);
+        const box = li.querySelector("input") ?? li.querySelector(".checkbox");
+        const isTodo = c.includes("to-do-list") || (box && box.tagName.toLowerCase() === "input" && box.getAttribute("type") === "checkbox" && li.childNodes.indexOf(box) <= 1);
         const { text, kids } = liParts(li);
         if (isTodo) {
-          const checked = box ? box.hasAttribute("checked") || cls(box).includes("checkbox-on") : false;
+          const checked = box ? (box.tagName.toLowerCase() === "input" && box.hasAttribute("checked")) || cls(box).includes("checkbox-on") : false;
           return [withKids({ type: "to_do", text, props: { checked } }, kids)];
         }
         return [withKids({ type: tag === "ol" ? "numbered_list_item" : "bulleted_list_item", text, ...props(colorProps(e)) }, kids)];

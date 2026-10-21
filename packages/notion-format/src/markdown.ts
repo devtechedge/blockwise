@@ -128,11 +128,14 @@ export function markdownToBlocks(md: string): BlockInput[] {
         const inner: string[] = [];
         while (pos < lines.length && lines[pos]!.text !== "</aside>") { inner.push(lines[pos]!.raw.slice(Math.min(base, lines[pos]!.indent))); pos++; }
         pos++;
-        const firstIdx = inner.findIndex((l) => l.trim() !== "");
-        const first = firstIdx >= 0 ? inner[firstIdx]!.trim() : "";
-        const iconMatch = first.match(/^(\p{Extended_Pictographic}\uFE0F?|\S)\s+(.*)$/u);
+        let firstIdx = inner.findIndex((l) => l.trim() !== "");
+        if (firstIdx < 0) firstIdx = inner.length;
+        let endIdx = firstIdx;
+        while (endIdx < inner.length && inner[endIdx]!.trim() !== "") endIdx++;
+        const first = inner.slice(firstIdx, endIdx).map((l) => l.trim()).join("\n");
+        const iconMatch = first.match(/^(\p{Extended_Pictographic}\uFE0F?|\S)\s+([\s\S]*)$/u);
         const isIcon = iconMatch && /\p{Extended_Pictographic}/u.test(iconMatch[1]!);
-        const children = markdownToBlocks(inner.slice(firstIdx + 1).join("\n"));
+        const children = markdownToBlocks(inner.slice(endIdx).join("\n"));
         const b: BlockInput = { type: "callout", text: mdToInline(isIcon ? iconMatch![2]! : first), props: { icon: isIcon ? iconMatch![1]! : "\u{1F4A1}" } };
         if (children.length) b.children = children;
         out.push(b);
