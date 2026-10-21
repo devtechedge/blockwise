@@ -31,7 +31,7 @@ const sets = {
   ],
 };
 for (const [name, inputs] of Object.entries(sets)) {
-  const data = encodeInputs(inputs as never, { now: 1792540800000, spaceId: "00000000-0000-4000-8000-0000000000aa" });
+  const data = encodeInputs(inputs as never, { notionPayload: true, now: 1792540800000, spaceId: "00000000-0000-4000-8000-0000000000aa" });
   const json = JSON.parse(data["text/_notion-blocks-v3-production"]!);
   writeFileSync(new URL(`${name}.json`, out), JSON.stringify({ mime: { "text/plain": data["text/plain"], "text/html": data["text/html"], "text/_notion-blocks-v3-production": data["text/_notion-blocks-v3-production"] }, payload: json }, null, 2) + "\n");
 }

@@ -9,6 +9,13 @@ export const NOTION_BLOCKS_MIME = "text/_notion-blocks-v3-production";
 export const NOTION_TEXT_MIME = "text/_notion-text-production";
 export const NOTION_MULTI_TEXT_MIME = "text/_notion-multi-text-production";
 export const NOTION_PAGE_SOURCE_MIME = "text/_notion-page-source-production";
+/**
+ * Blockwise's own copy of the v3 block payload. Notion's web app silently
+ * dropped a plain Ctrl+V when our payload sat under its private MIME (live
+ * paste check, 2026-10-22), so by default we no longer write that key and let
+ * Notion read the HTML flavour. Blockwise reads both keys.
+ */
+export const BLOCKWISE_BLOCKS_MIME = "application/x-blockwise-blocks-v3";
 export const NOTION_PRIVATE_MIMES = [NOTION_BLOCKS_MIME, NOTION_TEXT_MIME, NOTION_MULTI_TEXT_MIME, NOTION_PAGE_SOURCE_MIME] as const;
 
 export interface BlockSelectionPayload {
@@ -24,6 +31,8 @@ export interface EncodeOptions extends WriteOptions {
   /** Parent block id written into the records, defaults to the doc root. */
   parentId?: string;
   action?: "copy" | "cut";
+  /** Also write the payload under Notion's private MIME. Off by default, see BLOCKWISE_BLOCKS_MIME. */
+  notionPayload?: boolean;
 }
 
 /** Serialise selected top level blocks the way Notion's copy handler does. */
@@ -38,10 +47,12 @@ export function encodeClipboard(doc: Doc, ids: string[], opts: EncodeOptions = {
   const contiguous = ids.every((id, i) => parent[at + i] === id);
   const payload: BlockSelectionPayload = { blocks, action: opts.action ?? "copy", wasContiguousSelection: contiguous };
   const inputs = ids.map((id) => toInput(doc, id, false));
+  const json = JSON.stringify(payload);
   return {
     "text/plain": blocksToMarkdown(inputs).replace(/\n$/, ""),
-    "text/html": blocksToHtml(inputs),
-    [NOTION_BLOCKS_MIME]: JSON.stringify(payload),
+    "text/html": blocksToHtml(inputs, { clipboard: true }),
+    [BLOCKWISE_BLOCKS_MIME]: json,
+    ...(opts.notionPayload ? { [NOTION_BLOCKS_MIME]: json } : {}),
   };
 }
 
@@ -70,7 +81,7 @@ const LOOKS_LIKE_MARKDOWN = /(^|\n)\s*(#{1,3} |[-*+] |\d+[.)] |> |```|\|.*\||- \
  * private block payload, then HTML (when it has formatting), then text.
  */
 export function decodeClipboard(data: ClipboardData, opts: { keepIds?: boolean } = {}): { blocks: BlockInput[]; source: ClipboardSource } {
-  const json = data[NOTION_BLOCKS_MIME];
+  const json = data[NOTION_BLOCKS_MIME] ?? data[BLOCKWISE_BLOCKS_MIME];
   if (json) {
     const payload = parseBlockSelection(json);
     if (payload) {
@@ -91,7 +102,7 @@ export function decodeClipboard(data: ClipboardData, opts: { keepIds?: boolean }
 
 /** Single line plain text pastes go inline into the current block instead of creating blocks. */
 export function isInlinePaste(data: ClipboardData): boolean {
-  if (data[NOTION_BLOCKS_MIME]) return false;
+  if (data[NOTION_BLOCKS_MIME] || data[BLOCKWISE_BLOCKS_MIME]) return false;
   const t = data["text/plain"] ?? "";
   if (t.includes("\n")) return false;
   const { blocks } = decodeClipboard(data);
