@@ -58,3 +58,14 @@ describe("html", () => {
     ]);
   });
 });
+
+describe("block colors in HTML export", () => {
+  it("writes block-color classes that import back", () => {
+    const blocks = [{ type: "paragraph" as const, text: [{ text: "p" }], props: { color: "orange_background" as const } }, { type: "quote" as const, text: [{ text: "q" }], props: { color: "purple" as const } }];
+    const html = pageToHtml("T", blocks);
+    expect(html).toContain('<p class="block-color-orange_background">p</p>');
+    expect(html).not.toContain("data-notion-highlight");
+    const back = htmlToBlocks(html);
+    expect(back.map((b) => b.props?.color)).toEqual(["orange_background", "purple"]);
+  });
+});

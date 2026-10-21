@@ -149,7 +149,17 @@ describe("Notion paste parser forms (evidence 2026-10-22)", () => {
 
   it("writes block colors as data-notion-highlight on the block element", () => {
     const html = encodeInputs([{ type: "paragraph", text: text("p"), props: { color: "red" } }])["text/html"]!;
-    expect(html).toBe('<p class="block-color-red" data-notion-highlight="red">p</p>');
+    expect(html).toBe('<p class="block-color-red" data-notion-highlight="red" style="color:#d44c47">p</p>');
+  });
+
+  it.each([["blue_background", "blue_background", "background-color:#e7f3f8"], ["green", "teal", "color:"], ["gray_background", "gray_background", "background-color:"]])("block color %s goes out as data-notion-highlight=%s plus inline style and format.block_color", (c, notion, style) => {
+    const data = encodeInputs([{ type: "heading_2", text: text("h"), props: { color: c as never } }]);
+    const html = data["text/html"]!;
+    expect(html).toContain(`data-notion-highlight="${notion}"`);
+    expect(html).toContain(`style="${style}`);
+    expect(data[BLOCKWISE_BLOCKS_MIME]!).toContain(`"block_color":"${notion}"`);
+    expect(decodeClipboard({ "text/html": html }).blocks[0]!.props!.color).toBe(c);
+    expect(decodeClipboard({ [BLOCKWISE_BLOCKS_MIME]: data[BLOCKWISE_BLOCKS_MIME]! }).blocks[0]!.props!.color).toBe(c);
   });
 
   it("writes inline equations with data-notion-inline-equation", () => {

@@ -70,7 +70,7 @@ function attrs(b: BlockInput, cls: string | null, opts: HtmlOptions): string {
   if (opts.ids && b.id) parts.push(`id="${b.id}"`);
   const classes = [cls, b.props?.color ? `block-color-${b.props.color}` : null].filter(Boolean);
   if (classes.length) parts.push(`class="${classes.join(" ")}"`);
-  if (opts.clipboard && b.props?.color && b.type !== "callout") parts.push(`data-notion-highlight="${toNotionColor(b.props.color)}"`);
+  if (opts.clipboard && b.props?.color && b.type !== "callout") parts.push(`data-notion-highlight="${toNotionColor(b.props.color)}"`, `style="${colorStyle(b.props.color)}"`);
   return parts.length ? " " + parts.join(" ") : "";
 }
 
