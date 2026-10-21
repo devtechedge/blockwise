@@ -1,0 +1,5 @@
+﻿Name,Status,Tags,Points,Due,Done
+Write spec,Doing,"docs, writing",3,"October 20, 2026",No
+Ship,Todo,release,8,"November 1, 2026",No
+Fix bug,Done,,1,,Yes
+Plan,Todo,docs,2,"October 22, 2026",No
