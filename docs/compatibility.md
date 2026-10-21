@@ -41,16 +41,16 @@ Callouts and to-dos from Blockwise to Notion have not been checked live yet. Cli
 
 Title, text, number, select, multi select, date (including Notion's `October 21, 2026` and ranges), checkbox and URL import from and export to Notion CSV with type inference. Formulas, relations, rollups, people and files import as text.
 
-## Test results (2026-10-21)
+## Test results (2026-10-22)
 
 | Package | Tests |
 | --- | --- |
 | @blockwise/core | 26 |
-| @blockwise/notion-format | 33 |
+| @blockwise/notion-format | 41 |
 | @blockwise/database | 10 |
 | @blockwise/interop | 11 |
 | @blockwise/notion-sync (mocked API only) | 9 |
 | @blockwise/web unit | 3 |
-| @blockwise/web Playwright | 10 |
+| @blockwise/web Playwright | 12 |
 
-All pass in CI. The one open item is the manual paste into real Notion, see `manual-paste-check.md`.
+All pass in CI. Open item: a live re-run of the paste check for toggles, highlights and callouts.

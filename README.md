@@ -52,7 +52,7 @@ See the [compatibility matrix](docs/compatibility.md) and the [known limitations
 | Editor core | Framework free TypeScript packages: document model, formats, databases, interop, sync |
 | Data | IndexedDB in the browser, zip archives via fflate |
 | Sync | `@notionhq/client` through a page and block only pass-through route |
-| Tests | Vitest (92 unit tests), Playwright (10 end to end tests) |
+| Tests | Vitest (100 unit tests), Playwright (12 end to end tests) |
 | Hosting | Vercel |
 | CI | GitHub Actions |
 
