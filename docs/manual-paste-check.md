@@ -38,3 +38,11 @@ Run 2 (2026-10-22, Notion web): plain Ctrl+V worked; toggle, to-dos and the othe
 Run 3 (2026-10-22, Notion web): inline equations rendered natively and every block type stayed native with plain Ctrl+V. The word "colour" arrived as orange text. That was correct: the demo page stores it as orange text color, and Notion received `data-notion-highlight="orange"`. The bug was in Blockwise's own display, which drew `<mark class="highlight-orange">` with the browser's default yellow `<mark>` background, so it looked like a yellow highlight. Fixed after: marks have no default background, `highlight-*` classes draw text colors as text and `*_background` as backgrounds, and the demo page gains a real yellow background "highlight" next to "colour".
 
 Run 4 (2026-10-22, Notion web, after Reset demo): the rich text line pasted with plain Ctrl+V. "colour" arrived as orange text and "highlight" with a yellow background. Bold, italic, underline, strike, inline code, link and the inline equation were all native. The only oddity was the trailing period after the equation wrapping onto its own line, most likely page width. Text colors, background highlights and inline equations are verified live. Block colors are still unchecked.
+
+## Block color check (pending)
+
+1. Open https://blockwise-cyan.vercel.app, click Reset demo, and find the blue background paragraph starting "Block color" under "Every block type".
+2. To set a color yourself: hover a block, click the handle on its left (or right click it), choose Color, and pick one of the 10 text colors or 10 background colors. Shift click more handles first to color several blocks at once; `Ctrl+Z` undoes it.
+3. Click that block's handle so it is selected, press `Esc` to close the menu, press `Ctrl+C`, and paste into a Notion page with plain `Ctrl+V`.
+4. Expected: the whole block arrives with the same block color (text color or background).
+

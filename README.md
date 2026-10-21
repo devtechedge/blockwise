@@ -33,7 +33,7 @@ A local first, open source block editor whose content moves cleanly to and from 
 ## Features
 
 - **Block editor**: headings, lists, to-dos, toggles, quotes, callouts, code, equations, images, simple tables, columns, sub pages and inline databases
-- **Fast editing**: slash menu, Markdown shortcuts, inline formatting toolbar, drag to reorder, keyboard block selection, undo and redo
+- **Fast editing**: slash menu, block menu on the handle (delete, duplicate, turn into, text and background block colors), Markdown shortcuts, inline formatting toolbar, drag to reorder, keyboard block selection, undo and redo
 - **Clipboard bridge**: copies blocks as Notion friendly HTML and Markdown, and pastes Notion's own block data, HTML or text ([format spec](docs/specs/clipboard.md))
 - **Import and export**: Notion "Markdown & CSV" and "HTML" export zips, in both directions ([format spec](docs/specs/export.md))
 - **Databases**: typed properties, filters, sorts and Notion CSV round trips ([spec](docs/specs/database.md))
@@ -52,7 +52,7 @@ See the [compatibility matrix](docs/compatibility.md) and the [known limitations
 | Editor core | Framework free TypeScript packages: document model, formats, databases, interop, sync |
 | Data | IndexedDB in the browser, zip archives via fflate |
 | Sync | `@notionhq/client` through a page and block only pass-through route |
-| Tests | Vitest (108 unit tests), Playwright (13 end to end tests) |
+| Tests | Vitest (116 unit tests), Playwright (16 end to end tests) |
 | Hosting | Vercel |
 | CI | GitHub Actions |
 

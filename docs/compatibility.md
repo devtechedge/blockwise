@@ -35,7 +35,7 @@ Bold, italic, underline, strikethrough, inline code, links and text or backgroun
 | Blockwise to Notion | Run 1: heading, nested bullets, numbered list, quote, code with language, bold, italic, underline, strike, inline code, link. Run 2: plain Ctrl+V, toggle, to-dos and the other block types | Runs 3 and 4: inline equation, text colors and background highlights verified live. Still to confirm: block colors |
 | Notion to Blockwise | To-do, heading, rich text paragraph, nested bullet, numbered list, quote, code (through Notion's block payload) | Toggle (reader keeps toggle and children, regression tested), multi block paste into the title |
 
-Runs 3 and 4 (2026-10-22) verified inline equations, text colors and background highlights live in Notion web with plain Ctrl+V. Block colors are not yet checked live. Clipboard v3 columns above describe Blockwise reading Notion's payload; Blockwise writes the same schema under its own MIME.
+Runs 3 and 4 (2026-10-22) verified inline equations, text colors and background highlights live in Notion web with plain Ctrl+V. Block colors are not yet checked live. They can now be set in the editor from the block menu (click or right click the handle, then Color), and the demo page has a blue background block for the check. Clipboard v3 columns above describe Blockwise reading Notion's payload; Blockwise writes the same schema under its own MIME.
 
 ## Database property types
 
@@ -45,12 +45,12 @@ Title, text, number, select, multi select, date (including Notion's `October 21,
 
 | Package | Tests |
 | --- | --- |
-| @blockwise/core | 26 |
-| @blockwise/notion-format | 49 |
+| @blockwise/core | 29 |
+| @blockwise/notion-format | 53 |
 | @blockwise/database | 10 |
 | @blockwise/interop | 11 |
-| @blockwise/notion-sync (mocked API only) | 9 |
+| @blockwise/notion-sync (mocked API only) | 10 |
 | @blockwise/web unit | 3 |
-| @blockwise/web Playwright | 13 |
+| @blockwise/web Playwright | 16 |
 
 All pass in CI. Open item: a live check of block colors.
