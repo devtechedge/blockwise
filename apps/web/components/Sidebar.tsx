@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { childPages, pageTitle, searchPages } from "@blockwise/core";
 import { exportZip, importNotionFiles, importNotionZip } from "@blockwise/interop";
-import { createPage, deletePage, getState, mergeWorkspace, movePage, openPage, resetWorkspace, setTheme, toast, useApp } from "@/lib/store";
+import { createPage, deletePage, getState, mergeWorkspace, movePage, openPage, resetWorkspace, toast, useApp } from "@/lib/store";
 import { download } from "@/lib/files";
 import { SyncDialog } from "./SyncDialog";
 
@@ -30,7 +30,6 @@ function PageNode({ id, depth }: { id: string; depth: number }) {
 
 export function Sidebar() {
   const ws = useApp((s) => s.ws);
-  const theme = useApp((s) => s.theme);
   const [q, setQ] = useState("");
   const [sync, setSync] = useState(false);
   const [menu, setMenu] = useState(false);
@@ -83,7 +82,6 @@ export function Sidebar() {
           )}
         </div>
         <button className="side-btn" onClick={() => setSync(true)}>Notion API sync</button>
-        <button className="side-btn" aria-label="Toggle dark mode" onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>{theme === "dark" ? "\u2600 Light" : "\u263E Dark"}</button>
         <button className="side-btn muted" onClick={() => { if (confirm("Replace everything with the demo pages?")) void resetWorkspace(); }}>Reset demo</button>
         <a className="side-link" href="https://github.com/devtechedge/blockwise" target="_blank" rel="noreferrer">Source on GitHub</a>
       </div>

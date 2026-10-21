@@ -1,11 +1,12 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { getBlock, opInsert, opUpdate, plain, type Doc } from "@blockwise/core";
+import { getBlock, pageTitle, opInsert, opUpdate, plain, type Doc } from "@blockwise/core";
 import { apply, getState, redo, setSelection, undo, useApp } from "@/lib/store";
 import { copySelection, deleteSelection, duplicateSelection, moveSelection, pasteBlocks, readClipboard, topLevelSelection } from "@/lib/actions";
 import { BlockList } from "./Block";
 import { SlashMenu } from "./SlashMenu";
 import { InlineToolbar } from "./InlineToolbar";
+import { ThemeToggle } from "./ThemeToggle";
 
 const isMac = typeof navigator !== "undefined" && /Mac|iPhone|iPad/.test(navigator.platform);
 
@@ -118,6 +119,14 @@ export function Editor({ doc }: { doc: Doc }) {
 
 export function EditorHost() {
   const doc = useApp((s) => (s.current ? s.ws.pages[s.current] ?? null : null));
-  if (!doc) return <main className="editor empty">No page selected</main>;
-  return <Editor key={doc.rootId} doc={doc} />;
+  const title = useApp((s) => (s.current ? pageTitle(s.ws, s.current) : ""));
+  return (
+    <div className="main-col">
+      <header className="topbar">
+        <span className="crumb">{title}</span>
+        <div className="top-actions"><ThemeToggle /></div>
+      </header>
+      {doc ? <Editor key={doc.rootId} doc={doc} /> : <main className="editor empty">No page selected</main>}
+    </div>
+  );
 }

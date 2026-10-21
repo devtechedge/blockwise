@@ -95,8 +95,11 @@ test("pasting HTML creates blocks", async ({ page }) => {
 
 test("dark mode toggle switches theme", async ({ page }) => {
   await page.goto("/");
-  await page.getByRole("button", { name: "Toggle dark mode" }).click();
-  await expect(page.locator("html")).toHaveAttribute("data-theme", /dark|light/);
+  const before = await page.locator("html").getAttribute("data-theme");
+  await page.getByRole("button", { name: /Switch to (dark|light) mode/ }).click();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", before === "dark" ? "light" : "dark");
+  await page.reload();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", before === "dark" ? "light" : "dark");
 });
 
 test("export downloads a zip", async ({ page }) => {
