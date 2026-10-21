@@ -1,0 +1,33 @@
+{
+  "name": "@blockwise/interop",
+  "version": "0.1.0",
+  "description": "Import and export Notion style Markdown and CSV or HTML zip archives",
+  "license": "MIT",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@blockwise/core": "workspace:*",
+    "@blockwise/database": "workspace:*",
+    "@blockwise/notion-format": "workspace:*",
+    "fflate": "^0.8"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vitest": "^3.2.4"
+  }
+}
