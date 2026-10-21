@@ -143,3 +143,30 @@ a { color: inherit; }
   .editor { padding: 24px 20px 30vh 44px; }
   .gutter { left: -44px; }
 }
+/* layout fixes */
+.block-content > * { flex: 1; min-width: 0; }
+.list-row { display: flex; align-items: flex-start; gap: 2px; }
+.grow { flex: 1; min-width: 0; }
+.grow.done > .text-block { text-decoration: line-through; color: var(--muted); }
+.callout { display: flex; gap: 6px; }
+.callout-icon { flex: none; height: 30px; padding: 0; }
+.quote { width: 100%; }
+.cell-in { width: 100%; border: 0; background: transparent; box-shadow: none; padding: 6px 8px; border-radius: 0; }
+.cell-in:focus { outline: 2px solid var(--accent); outline-offset: -2px; background: var(--panel); }
+.db-table td > .tag { display: none; }
+.multi { padding: 4px 6px; align-items: center; }
+.multi .cell-in { width: 50px; flex: 1; padding: 2px; }
+.tag button { padding: 0 0 0 4px; font-size: 11px; color: var(--muted); }
+.db-table th input { border: 0; background: transparent; padding: 6px 2px; font-weight: 500; color: var(--muted); width: 120px; }
+.db-table th { display: table-cell; }
+.db-table .rowdel { min-width: 0; border: 0; } .db-table .rowdel button { opacity: 0; } .db-table tr:hover .rowdel button { opacity: 1; }
+.pdel { opacity: 0; } .db-table th:hover .pdel { opacity: 1; }
+.callout.bg-gray_background { background: var(--gray-bg); }
+.callout.bg-brown_background { background: var(--brown-bg); }
+.callout.bg-orange_background { background: var(--orange-bg); }
+.callout.bg-yellow_background { background: var(--yellow-bg); }
+.callout.bg-green_background { background: var(--green-bg); }
+.callout.bg-blue_background { background: var(--blue-bg); }
+.callout.bg-purple_background { background: var(--purple-bg); }
+.callout.bg-pink_background { background: var(--pink-bg); }
+.callout.bg-red_background { background: var(--red-bg); }
