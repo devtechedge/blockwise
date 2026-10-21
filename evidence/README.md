@@ -31,3 +31,15 @@ For each run `records.json` stores the Evidence ID REA returned, the SHA-256 and
 - REA's string seed traces for the MIME name and `notionvc` returned `no-match` because string literals that are not route, API or channel nodes are not graph entities. Those facts come from reading the code at the character offsets listed in the SPEC files, which is the same method REA's showcase used.
 
 Feature level details, quirks and unknowns are in `docs/specs/`.
+
+## Paste parser evidence (2026-10-22)
+
+Added after the live paste check showed lost highlights and plain text equations. Three more public chunks were hashed (`records.json`, entries with `markers`): the HTML paste parser (`26751-...js`), the export renderer that also defines Notion's own HTML for marks (`exportJsxRenderer-...js`), and the chunk that defines the equation token class. Each marker is a string literal and its byte offset in that file.
+
+REA 6.7.0 `analyze-javascript-application` ran on the first two chunks; `trace-application-feature` with the seeds `data-notion-inline-equation`, `data-notion-highlight` and `notion-text-equation-token` returned `no-match`, like the earlier literal seeds, so the findings below come from reading the hashed files at the recorded offsets.
+
+- The paste parser keeps a map of `data-notion-*` attribute names. Inline highlights are read from `data-notion-highlight="<color>"` on any ancestor of a text run (and `data-notion-background-highlight`), never from CSS. The value must be one of Notion's internal color names.
+- Notion's internal palette names the green color `teal` (`teal`, `teal_background`). `green` is not accepted.
+- The same attribute on a block element sets the block color.
+- An inline equation is an element with `data-notion-inline-equation` or the class `notion-text-equation-token`. The TeX is taken from `data-notion-equation`, then `data-notion-inline-equation`, then a KaTeX `<annotation encoding="application/x-tex">`, then text wrapped in `$$...$$` or `$...$`. A bare token without any of these falls back to its text.
+- Notion's own HTML writes a highlight as `<mark class="highlight-<color>" data-notion-highlight="<color>">` and an inline equation as a `notion-text-equation-token` span carrying `data-notion-inline-equation` with `contenteditable="false"` (KaTeX markup when available).
