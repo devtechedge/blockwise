@@ -165,3 +165,14 @@ describe("Notion paste parser forms (evidence 2026-10-22)", () => {
     expect(spans[2]!.equation).toBe("y_1");
   });
 });
+
+describe("text color versus background color (paste run 3)", () => {
+  const span = (color: string) => ({ type: "paragraph" as const, text: [{ text: "x", marks: { color: color as never } }] });
+  it.each([["yellow", "yellow", "color:#cb912f"], ["yellow_background", "yellow_background", "background-color:#fbf3db"], ["orange", "orange", "color:#d9730d"]])("%s writes data-notion-highlight=%s", (c, attr, style) => {
+    const data = encodeInputs([span(c)]);
+    expect(data["text/html"]).toContain(`data-notion-highlight="${attr}" style="${style}"`);
+    expect(data[BLOCKWISE_BLOCKS_MIME]).toContain(`["h","${attr}"]`);
+    expect(decodeClipboard({ "text/html": data["text/html"]! }).blocks[0]!.text![0]!.marks!.color).toBe(c);
+    expect(decodeClipboard({ [BLOCKWISE_BLOCKS_MIME]: data[BLOCKWISE_BLOCKS_MIME]! }).blocks[0]!.text![0]!.marks!.color).toBe(c);
+  });
+});

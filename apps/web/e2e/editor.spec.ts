@@ -145,3 +145,12 @@ test("copied toggles and highlights survive a paste back", async ({ page }) => {
   await expect(page.locator('.blocks [data-type="toggle"]')).toHaveCount(1);
   await expect(page.locator(".blocks .c-yellow_background, .blocks [class*=yellow_background]").first()).toHaveText("hi");
 });
+
+test("text colors render as text colors and backgrounds as highlights", async ({ page }) => {
+  await page.goto("/");
+  const colour = page.locator(".blocks mark.highlight-orange", { hasText: "colour" }).first();
+  const hl = page.locator(".blocks mark.highlight-yellow_background", { hasText: "highlight" }).first();
+  await expect(colour).toBeVisible();
+  expect(await colour.evaluate((e) => getComputedStyle(e).backgroundColor)).toBe("rgba(0, 0, 0, 0)");
+  expect(await hl.evaluate((e) => getComputedStyle(e).backgroundColor)).not.toBe("rgba(0, 0, 0, 0)");
+});
