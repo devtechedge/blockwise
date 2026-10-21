@@ -18,6 +18,12 @@ export function Editor({ doc }: { doc: Doc }) {
     if (el && el.innerText !== plain(root.text)) el.innerText = plain(root.text);
   }, [root.text]);
 
+  useEffect(() => {
+    if (!root.text.length && root.children.length <= 1) titleRef.current?.focus();
+    // only on first mount of this page
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // Keyboard handling while blocks (not text) are selected.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
