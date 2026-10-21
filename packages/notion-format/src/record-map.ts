@@ -133,10 +133,10 @@ export function recordToInput(get: (id: string) => NotionRecord | undefined, id:
     p.hasColumnHeader = Boolean(format.table_block_column_header);
     p.hasRowHeader = Boolean(format.table_block_row_header);
     // Rows carry cells keyed by column id; rewrite them positionally.
-    children = (r.content ?? []).map((rid) => {
+    children = (r.content ?? []).map((rid): BlockInput | null => {
       const row = get(rid);
       if (!row) return null;
-      return { type: "table_row" as const, props: { cells: order.map((k) => fromTitle(row.properties?.[k])) } };
+      return { type: "table_row", props: { cells: order.map((k) => fromTitle(row.properties?.[k])) } };
     }).filter((x): x is BlockInput => x !== null);
   }
   if (Object.keys(p).length) input.props = p;
