@@ -1,5 +1,6 @@
 import type { BlockInput, Color, Marks, RichText, Span } from "@blockwise/core";
 import { normalize, plain } from "@blockwise/core";
+import { fromNotionColor, toNotionColor } from "./title.js";
 import { parse, HTMLElement, TextNode, type Node } from "node-html-parser";
 
 // ---------------- writer ----------------
@@ -25,7 +26,13 @@ function colorStyle(c: Color): string {
 
 export function inlineToHtml(rt: RichText, opts: { inlineStyles?: boolean } = {}): string {
   return normalize(rt).map((s) => {
-    if (s.equation !== undefined) return `<span class="notion-text-equation-token" data-tex="${escapeHtml(s.equation)}">${escapeHtml(s.equation)}</span>`;
+    if (s.equation !== undefined) {
+      const tex = escapeHtml(s.equation);
+      // Notion's paste parser reads the TeX from data-notion-inline-equation (evidence/README.md).
+      return opts.inlineStyles
+        ? `<span class="notion-text-equation-token" data-notion-inline-equation="${tex}" data-tex="${tex}" contenteditable="false">${tex}</span>`
+        : `<span class="notion-text-equation-token" data-tex="${tex}">${tex}</span>`;
+    }
     if (s.mention) {
       const m = s.mention;
       if (m.kind === "date") return `<time>@${escapeHtml(m.start)}${m.end ? " \u2192 " + escapeHtml(m.end) : ""}</time>`;
@@ -40,7 +47,7 @@ export function inlineToHtml(rt: RichText, opts: { inlineStyles?: boolean } = {}
     if (mk.italic) h = `<em>${h}</em>`;
     if (mk.bold) h = `<strong>${h}</strong>`;
     if (mk.color) h = opts.inlineStyles
-      ? `<span class="highlight-${mk.color}" style="${colorStyle(mk.color)}">${h}</span>`
+      ? `<mark class="highlight-${mk.color}" data-notion-highlight="${toNotionColor(mk.color)}" style="${colorStyle(mk.color)}">${h}</mark>`
       : `<mark class="highlight-${mk.color}">${h}</mark>`;
     if (mk.link) h = `<a href="${escapeHtml(mk.link)}">${h}</a>`;
     return h;
@@ -63,6 +70,7 @@ function attrs(b: BlockInput, cls: string | null, opts: HtmlOptions): string {
   if (opts.ids && b.id) parts.push(`id="${b.id}"`);
   const classes = [cls, b.props?.color ? `block-color-${b.props.color}` : null].filter(Boolean);
   if (classes.length) parts.push(`class="${classes.join(" ")}"`);
+  if (opts.clipboard && b.props?.color && b.type !== "callout") parts.push(`data-notion-highlight="${toNotionColor(b.props.color)}"`);
   return parts.length ? " " + parts.join(" ") : "";
 }
 
@@ -153,8 +161,18 @@ export function nearestColor(css: string, background: boolean): Color | undefine
   return best as Color | undefined;
 }
 
+const NAMED = new Set(Object.keys(COLOR_RGB));
+
+function named(v: string | undefined): Color | undefined {
+  if (!v) return undefined;
+  const c = fromNotionColor(v.trim());
+  return NAMED.has(c) ? (c as Color) : undefined;
+}
+
 function colorFrom(e: HTMLElement): Color | undefined {
-  for (const c of cls(e)) { const m = c.match(HIGHLIGHT); if (m && m[1] !== "default") return m[1] as Color; }
+  const attr = named(e.getAttribute("data-notion-highlight") ?? undefined) ?? named(e.getAttribute("data-notion-background-highlight") ?? undefined);
+  if (attr) return attr;
+  for (const c of cls(e)) { const m = c.match(HIGHLIGHT); if (m && m[1] !== "default") { const n = named(m[1]); if (n) return n; } }
   const st = styleOf(e);
   const bg = st.match(/background(?:-color)?:([^;]+)/);
   if (bg) { const c = nearestColor(bg[1]!, true); if (c) return c; }
@@ -178,7 +196,7 @@ export function htmlInline(nodes: Node[], marks: Marks = {}, opts: { preserveWhi
     if (tag === "br") { out.push({ text: "\n", marks: { ...m } }); return; }
     if (tag === "input" || tag === "style" || tag === "script") return;
     const c = cls(e);
-    const tex = e.getAttribute("data-tex") ?? (c.includes("notion-text-equation-token") ? e.querySelector("annotation")?.text : undefined);
+    const tex = e.getAttribute("data-notion-inline-equation") ?? e.getAttribute("data-tex") ?? (c.includes("notion-text-equation-token") || c.includes("katex") ? e.querySelector("annotation")?.text : undefined);
     if (tex !== undefined && tex !== null) { out.push({ text: tex, equation: tex }); return; }
     const st = styleOf(e);
     const next: Marks = { ...m };
