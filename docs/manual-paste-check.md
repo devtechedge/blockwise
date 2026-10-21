@@ -33,6 +33,8 @@ You need a Notion account (a free one is fine) and a desktop browser or the Noti
 - Pasting several blocks into the page title now inserts them at the top of the body.
 - The extra empty block is not in any flavour Blockwise writes (a regression test checks this). It is most likely Notion keeping the empty line the paste started on.
 
-Re-run: copy the Welcome page from "Every block type" through the callout and the to-dos, press plain Ctrl+V in Notion, and check the toggle, the yellow highlight and the callout.
+Run 2 (2026-10-22, Notion web): plain Ctrl+V worked; toggle, to-dos and the other block types were native. The yellow highlight was still lost (inline `background-color` is ignored) and the inline equation arrived as plain text `e^{i\pi}+1=0`. Fixed after: highlights and block colors carry `data-notion-highlight` with Notion's color names, and inline equations carry `data-notion-inline-equation`.
+
+Run 3: copy the Welcome page from "Every block type" through the callout and the to-dos, press plain Ctrl+V in Notion, and check the toggle, the yellow highlight and the callout.
 
 If you want to keep a real capture as a fixture, save the clipboard flavours as JSON under `packages/notion-format/fixtures/clipboard/` with a `live-` prefix, append `sha256sum <file>` output to `evidence/fixtures.sha256`, and run `node scripts/verify-evidence.mjs`. Remove any workspace or user ids you do not want to publish first.

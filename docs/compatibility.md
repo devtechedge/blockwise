@@ -26,16 +26,16 @@ Legend: ✅ implemented and round trips, 🟡 partial (see notes), ➖ not suppo
 
 ## Inline formatting
 
-Bold, italic, underline, strikethrough, inline code, links and text or background colors round trip through the block payload (annotation codes `b i _ s c a h`), HTML and the API. Markdown keeps everything except underline and color. Inline equations use code `e` with the U+204D placeholder on the clipboard and `$...$` in Markdown. Mentions (code `d`, U+2023 placeholder) are preserved on the clipboard and shown as plain text elsewhere.
+Bold, italic, underline, strikethrough, inline code, links and text or background colors round trip through the block payload (annotation codes `b i _ s c a h`), HTML and the API. Markdown keeps everything except underline and color. Inline equations use code `e` with the U+204D placeholder in the block payload, `data-notion-inline-equation` in clipboard HTML and `$...$` in Markdown. In the block payload and Notion's HTML attributes green is written as Notion's internal `teal`. Mentions (code `d`, U+2023 placeholder) are preserved on the clipboard and shown as plain text elsewhere.
 
 ## Live paste check (Notion web, 2026-10-22)
 
 | Direction | Verified live | Fixed after, needs re-run |
 | --- | --- | --- |
-| Blockwise to Notion | Heading, nested bullets, numbered list, quote, code with language, bold, italic, underline, strike, inline code, link, inline equation (through the HTML flavour) | Toggle, background highlight, plain Ctrl+V (Notion's private MIME no longer written) |
+| Blockwise to Notion | Run 1: heading, nested bullets, numbered list, quote, code with language, bold, italic, underline, strike, inline code, link. Run 2: plain Ctrl+V, toggle, to-dos and the other block types | Background and text highlight (`data-notion-highlight`), inline equation (`data-notion-inline-equation`), block colors |
 | Notion to Blockwise | To-do, heading, rich text paragraph, nested bullet, numbered list, quote, code (through Notion's block payload) | Toggle (reader keeps toggle and children, regression tested), multi block paste into the title |
 
-Callouts and to-dos from Blockwise to Notion have not been checked live yet. Clipboard v3 columns above describe Blockwise reading Notion's payload; Blockwise writes the same schema under its own MIME.
+Run 2 (2026-10-22) still lost the highlight and pasted inline equations as text; both now use the attributes Notion's paste parser reads and need run 3. Clipboard v3 columns above describe Blockwise reading Notion's payload; Blockwise writes the same schema under its own MIME.
 
 ## Database property types
 
@@ -46,11 +46,11 @@ Title, text, number, select, multi select, date (including Notion's `October 21,
 | Package | Tests |
 | --- | --- |
 | @blockwise/core | 26 |
-| @blockwise/notion-format | 41 |
+| @blockwise/notion-format | 46 |
 | @blockwise/database | 10 |
 | @blockwise/interop | 11 |
 | @blockwise/notion-sync (mocked API only) | 9 |
 | @blockwise/web unit | 3 |
 | @blockwise/web Playwright | 12 |
 
-All pass in CI. Open item: a live re-run of the paste check for toggles, highlights and callouts.
+All pass in CI. Open item: live run 3 of the paste check for highlights, inline equations and block colors.
