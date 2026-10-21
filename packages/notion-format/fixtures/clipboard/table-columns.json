@@ -1,0 +1,255 @@
+{
+  "mime": {
+    "text/plain": "| Name | Role | Since |\n| --- | --- | --- |\n| Ada | **Engineer** | 1843 |\n\n### Left\n\n![Diagram](https://example.com/diagram.png)",
+    "text/html": "<table class=\"simple-table\"><tbody><tr><th class=\"simple-table-header\">Name</th><th class=\"simple-table-header\">Role</th><th class=\"simple-table-header\">Since</th></tr><tr><td>Ada</td><td><strong>Engineer</strong></td><td>1843</td></tr></tbody></table><div class=\"column-list\"><div class=\"column\" style=\"width:50%\"><h3>Left</h3></div><div class=\"column\" style=\"width:50%\"><figure class=\"image\"><a href=\"https://example.com/diagram.png\"><img src=\"https://example.com/diagram.png\"/></a><figcaption>Diagram</figcaption></figure></div></div>",
+    "text/_notion-blocks-v3-production": "{\"blocks\":[{\"blockId\":\"00000000-0000-4000-8000-000000000129\",\"blockSubtree\":{\"__version__\":3,\"block\":{\"00000000-0000-4000-8000-000000000129\":{\"spaceId\":\"00000000-0000-4000-8000-0000000000aa\",\"value\":{\"value\":{\"id\":\"00000000-0000-4000-8000-000000000129\",\"version\":1,\"type\":\"table\",\"parent_id\":\"00000000-0000-4000-8000-000000000120\",\"parent_table\":\"block\",\"alive\":true,\"space_id\":\"00000000-0000-4000-8000-0000000000aa\",\"created_time\":1792540800000,\"last_edited_time\":1792540800000,\"format\":{\"table_block_column_order\":[\"cola\",\"colb\",\"colc\"],\"table_block_column_header\":true,\"table_block_row_header\":false},\"content\":[\"00000000-0000-4000-8000-00000000012a\",\"00000000-0000-4000-8000-00000000012b\"]},\"role\":\"editor\"}},\"00000000-0000-4000-8000-00000000012a\":{\"spaceId\":\"00000000-0000-4000-8000-0000000000aa\",\"value\":{\"value\":{\"id\":\"00000000-0000-4000-8000-00000000012a\",\"version\":1,\"type\":\"table_row\",\"parent_id\":\"00000000-0000-4000-8000-000000000129\",\"parent_table\":\"block\",\"alive\":true,\"space_id\":\"00000000-0000-4000-8000-0000000000aa\",\"created_time\":1792540800000,\"last_edited_time\":1792540800000,\"properties\":{\"cola\":[[\"Name\"]],\"colb\":[[\"Role\"]],\"colc\":[[\"Since\"]]}},\"role\":\"editor\"}},\"00000000-0000-4000-8000-00000000012b\":{\"spaceId\":\"00000000-0000-4000-8000-0000000000aa\",\"value\":{\"value\":{\"id\":\"00000000-0000-4000-8000-00000000012b\",\"version\":1,\"type\":\"table_row\",\"parent_id\":\"00000000-0000-4000-8000-000000000129\",\"parent_table\":\"block\",\"alive\":true,\"space_id\":\"00000000-0000-4000-8000-0000000000aa\",\"created_time\":1792540800000,\"last_edited_time\":1792540800000,\"properties\":{\"cola\":[[\"Ada\"]],\"colb\":[[\"Engineer\",[[\"b\"]]]],\"colc\":[[\"1843\"]]}},\"role\":\"editor\"}}}}},{\"blockId\":\"00000000-0000-4000-8000-00000000012c\",\"blockSubtree\":{\"__version__\":3,\"block\":{\"00000000-0000-4000-8000-00000000012c\":{\"spaceId\":\"00000000-0000-4000-8000-0000000000aa\",\"value\":{\"value\":{\"id\":\"00000000-0000-4000-8000-00000000012c\",\"version\":1,\"type\":\"column_list\",\"parent_id\":\"00000000-0000-4000-8000-000000000120\",\"parent_table\":\"block\",\"alive\":true,\"space_id\":\"00000000-0000-4000-8000-0000000000aa\",\"created_time\":1792540800000,\"last_edited_time\":1792540800000,\"content\":[\"00000000-0000-4000-8000-00000000012d\",\"00000000-0000-4000-8000-00000000012e\"]},\"role\":\"editor\"}},\"00000000-0000-4000-8000-00000000012d\":{\"spaceId\":\"00000000-0000-4000-8000-0000000000aa\",\"value\":{\"value\":{\"id\":\"00000000-0000-4000-8000-00000000012d\",\"version\":1,\"type\":\"column\",\"parent_id\":\"00000000-0000-4000-8000-00000000012c\",\"parent_table\":\"block\",\"alive\":true,\"space_id\":\"00000000-0000-4000-8000-0000000000aa\",\"created_time\":1792540800000,\"last_edited_time\":1792540800000,\"format\":{\"column_ratio\":0.5},\"content\":[\"00000000-0000-4000-8000-00000000012f\"]},\"role\":\"editor\"}},\"00000000-0000-4000-8000-00000000012f\":{\"spaceId\":\"00000000-0000-4000-8000-0000000000aa\",\"value\":{\"value\":{\"id\":\"00000000-0000-4000-8000-00000000012f\",\"version\":1,\"type\":\"sub_sub_header\",\"parent_id\":\"00000000-0000-4000-8000-00000000012d\",\"parent_table\":\"block\",\"alive\":true,\"space_id\":\"00000000-0000-4000-8000-0000000000aa\",\"created_time\":1792540800000,\"last_edited_time\":1792540800000,\"properties\":{\"title\":[[\"Left\"]]}},\"role\":\"editor\"}},\"00000000-0000-4000-8000-00000000012e\":{\"spaceId\":\"00000000-0000-4000-8000-0000000000aa\",\"value\":{\"value\":{\"id\":\"00000000-0000-4000-8000-00000000012e\",\"version\":1,\"type\":\"column\",\"parent_id\":\"00000000-0000-4000-8000-00000000012c\",\"parent_table\":\"block\",\"alive\":true,\"space_id\":\"00000000-0000-4000-8000-0000000000aa\",\"created_time\":1792540800000,\"last_edited_time\":1792540800000,\"format\":{\"column_ratio\":0.5},\"content\":[\"00000000-0000-4000-8000-000000000130\"]},\"role\":\"editor\"}},\"00000000-0000-4000-8000-000000000130\":{\"spaceId\":\"00000000-0000-4000-8000-0000000000aa\",\"value\":{\"value\":{\"id\":\"00000000-0000-4000-8000-000000000130\",\"version\":1,\"type\":\"image\",\"parent_id\":\"00000000-0000-4000-8000-00000000012e\",\"parent_table\":\"block\",\"alive\":true,\"space_id\":\"00000000-0000-4000-8000-0000000000aa\",\"created_time\":1792540800000,\"last_edited_time\":1792540800000,\"properties\":{\"source\":[[\"https://example.com/diagram.png\"]],\"caption\":[[\"Diagram\"]]},\"format\":{\"display_source\":\"https://example.com/diagram.png\"}},\"role\":\"editor\"}}}}}],\"action\":\"copy\",\"wasContiguousSelection\":true}"
+  },
+  "payload": {
+    "blocks": [
+      {
+        "blockId": "00000000-0000-4000-8000-000000000129",
+        "blockSubtree": {
+          "__version__": 3,
+          "block": {
+            "00000000-0000-4000-8000-000000000129": {
+              "spaceId": "00000000-0000-4000-8000-0000000000aa",
+              "value": {
+                "value": {
+                  "id": "00000000-0000-4000-8000-000000000129",
+                  "version": 1,
+                  "type": "table",
+                  "parent_id": "00000000-0000-4000-8000-000000000120",
+                  "parent_table": "block",
+                  "alive": true,
+                  "space_id": "00000000-0000-4000-8000-0000000000aa",
+                  "created_time": 1792540800000,
+                  "last_edited_time": 1792540800000,
+                  "format": {
+                    "table_block_column_order": [
+                      "cola",
+                      "colb",
+                      "colc"
+                    ],
+                    "table_block_column_header": true,
+                    "table_block_row_header": false
+                  },
+                  "content": [
+                    "00000000-0000-4000-8000-00000000012a",
+                    "00000000-0000-4000-8000-00000000012b"
+                  ]
+                },
+                "role": "editor"
+              }
+            },
+            "00000000-0000-4000-8000-00000000012a": {
+              "spaceId": "00000000-0000-4000-8000-0000000000aa",
+              "value": {
+                "value": {
+                  "id": "00000000-0000-4000-8000-00000000012a",
+                  "version": 1,
+                  "type": "table_row",
+                  "parent_id": "00000000-0000-4000-8000-000000000129",
+                  "parent_table": "block",
+                  "alive": true,
+                  "space_id": "00000000-0000-4000-8000-0000000000aa",
+                  "created_time": 1792540800000,
+                  "last_edited_time": 1792540800000,
+                  "properties": {
+                    "cola": [
+                      [
+                        "Name"
+                      ]
+                    ],
+                    "colb": [
+                      [
+                        "Role"
+                      ]
+                    ],
+                    "colc": [
+                      [
+                        "Since"
+                      ]
+                    ]
+                  }
+                },
+                "role": "editor"
+              }
+            },
+            "00000000-0000-4000-8000-00000000012b": {
+              "spaceId": "00000000-0000-4000-8000-0000000000aa",
+              "value": {
+                "value": {
+                  "id": "00000000-0000-4000-8000-00000000012b",
+                  "version": 1,
+                  "type": "table_row",
+                  "parent_id": "00000000-0000-4000-8000-000000000129",
+                  "parent_table": "block",
+                  "alive": true,
+                  "space_id": "00000000-0000-4000-8000-0000000000aa",
+                  "created_time": 1792540800000,
+                  "last_edited_time": 1792540800000,
+                  "properties": {
+                    "cola": [
+                      [
+                        "Ada"
+                      ]
+                    ],
+                    "colb": [
+                      [
+                        "Engineer",
+                        [
+                          [
+                            "b"
+                          ]
+                        ]
+                      ]
+                    ],
+                    "colc": [
+                      [
+                        "1843"
+                      ]
+                    ]
+                  }
+                },
+                "role": "editor"
+              }
+            }
+          }
+        }
+      },
+      {
+        "blockId": "00000000-0000-4000-8000-00000000012c",
+        "blockSubtree": {
+          "__version__": 3,
+          "block": {
+            "00000000-0000-4000-8000-00000000012c": {
+              "spaceId": "00000000-0000-4000-8000-0000000000aa",
+              "value": {
+                "value": {
+                  "id": "00000000-0000-4000-8000-00000000012c",
+                  "version": 1,
+                  "type": "column_list",
+                  "parent_id": "00000000-0000-4000-8000-000000000120",
+                  "parent_table": "block",
+                  "alive": true,
+                  "space_id": "00000000-0000-4000-8000-0000000000aa",
+                  "created_time": 1792540800000,
+                  "last_edited_time": 1792540800000,
+                  "content": [
+                    "00000000-0000-4000-8000-00000000012d",
+                    "00000000-0000-4000-8000-00000000012e"
+                  ]
+                },
+                "role": "editor"
+              }
+            },
+            "00000000-0000-4000-8000-00000000012d": {
+              "spaceId": "00000000-0000-4000-8000-0000000000aa",
+              "value": {
+                "value": {
+                  "id": "00000000-0000-4000-8000-00000000012d",
+                  "version": 1,
+                  "type": "column",
+                  "parent_id": "00000000-0000-4000-8000-00000000012c",
+                  "parent_table": "block",
+                  "alive": true,
+                  "space_id": "00000000-0000-4000-8000-0000000000aa",
+                  "created_time": 1792540800000,
+                  "last_edited_time": 1792540800000,
+                  "format": {
+                    "column_ratio": 0.5
+                  },
+                  "content": [
+                    "00000000-0000-4000-8000-00000000012f"
+                  ]
+                },
+                "role": "editor"
+              }
+            },
+            "00000000-0000-4000-8000-00000000012f": {
+              "spaceId": "00000000-0000-4000-8000-0000000000aa",
+              "value": {
+                "value": {
+                  "id": "00000000-0000-4000-8000-00000000012f",
+                  "version": 1,
+                  "type": "sub_sub_header",
+                  "parent_id": "00000000-0000-4000-8000-00000000012d",
+                  "parent_table": "block",
+                  "alive": true,
+                  "space_id": "00000000-0000-4000-8000-0000000000aa",
+                  "created_time": 1792540800000,
+                  "last_edited_time": 1792540800000,
+                  "properties": {
+                    "title": [
+                      [
+                        "Left"
+                      ]
+                    ]
+                  }
+                },
+                "role": "editor"
+              }
+            },
+            "00000000-0000-4000-8000-00000000012e": {
+              "spaceId": "00000000-0000-4000-8000-0000000000aa",
+              "value": {
+                "value": {
+                  "id": "00000000-0000-4000-8000-00000000012e",
+                  "version": 1,
+                  "type": "column",
+                  "parent_id": "00000000-0000-4000-8000-00000000012c",
+                  "parent_table": "block",
+                  "alive": true,
+                  "space_id": "00000000-0000-4000-8000-0000000000aa",
+                  "created_time": 1792540800000,
+                  "last_edited_time": 1792540800000,
+                  "format": {
+                    "column_ratio": 0.5
+                  },
+                  "content": [
+                    "00000000-0000-4000-8000-000000000130"
+                  ]
+                },
+                "role": "editor"
+              }
+            },
+            "00000000-0000-4000-8000-000000000130": {
+              "spaceId": "00000000-0000-4000-8000-0000000000aa",
+              "value": {
+                "value": {
+                  "id": "00000000-0000-4000-8000-000000000130",
+                  "version": 1,
+                  "type": "image",
+                  "parent_id": "00000000-0000-4000-8000-00000000012e",
+                  "parent_table": "block",
+                  "alive": true,
+                  "space_id": "00000000-0000-4000-8000-0000000000aa",
+                  "created_time": 1792540800000,
+                  "last_edited_time": 1792540800000,
+                  "properties": {
+                    "source": [
+                      [
+                        "https://example.com/diagram.png"
+                      ]
+                    ],
+                    "caption": [
+                      [
+                        "Diagram"
+                      ]
+                    ]
+                  },
+                  "format": {
+                    "display_source": "https://example.com/diagram.png"
+                  }
+                },
+                "role": "editor"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "action": "copy",
+    "wasContiguousSelection": true
+  }
+}

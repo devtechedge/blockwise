@@ -1,0 +1,234 @@
+{
+  "mime": {
+    "text/plain": "# Release notes\n\n<aside>\n💡 Read this first\n</aside>\n\n- Details\n    > Quoted inside a toggle\n\n```bash\npnpm install\npnpm test\n```\n\n---\n\n$$\n\\int_0^1 x\\,dx\n$$",
+    "text/html": "<h1>Release notes</h1><aside class=\"callout block-color-gray_background\"><span class=\"icon\">💡</span><div>Read this first</div></aside><ul class=\"toggle\"><li><details open=\"\"><summary>Details</summary><div class=\"indented\"><blockquote>Quoted inside a toggle</blockquote></div></details></li></ul><pre class=\"code\"><code class=\"language-bash\">pnpm install\npnpm test</code></pre><hr/><figure class=\"equation\"><div class=\"equation-container\" data-tex=\"\\int_0^1 x\\,dx\">\\int_0^1 x\\,dx</div></figure>",
+    "text/_notion-blocks-v3-production": "{\"blocks\":[{\"blockId\":\"00000000-0000-4000-8000-000000000119\",\"blockSubtree\":{\"__version__\":3,\"block\":{\"00000000-0000-4000-8000-000000000119\":{\"spaceId\":\"00000000-0000-4000-8000-0000000000aa\",\"value\":{\"value\":{\"id\":\"00000000-0000-4000-8000-000000000119\",\"version\":1,\"type\":\"header\",\"parent_id\":\"00000000-0000-4000-8000-000000000111\",\"parent_table\":\"block\",\"alive\":true,\"space_id\":\"00000000-0000-4000-8000-0000000000aa\",\"created_time\":1792540800000,\"last_edited_time\":1792540800000,\"properties\":{\"title\":[[\"Release notes\"]]}},\"role\":\"editor\"}}}}},{\"blockId\":\"00000000-0000-4000-8000-00000000011a\",\"blockSubtree\":{\"__version__\":3,\"block\":{\"00000000-0000-4000-8000-00000000011a\":{\"spaceId\":\"00000000-0000-4000-8000-0000000000aa\",\"value\":{\"value\":{\"id\":\"00000000-0000-4000-8000-00000000011a\",\"version\":1,\"type\":\"callout\",\"parent_id\":\"00000000-0000-4000-8000-000000000111\",\"parent_table\":\"block\",\"alive\":true,\"space_id\":\"00000000-0000-4000-8000-0000000000aa\",\"created_time\":1792540800000,\"last_edited_time\":1792540800000,\"properties\":{\"title\":[[\"Read this first\"]]},\"format\":{\"block_color\":\"gray_background\",\"page_icon\":\"💡\"}},\"role\":\"editor\"}}}}},{\"blockId\":\"00000000-0000-4000-8000-00000000011b\",\"blockSubtree\":{\"__version__\":3,\"block\":{\"00000000-0000-4000-8000-00000000011b\":{\"spaceId\":\"00000000-0000-4000-8000-0000000000aa\",\"value\":{\"value\":{\"id\":\"00000000-0000-4000-8000-00000000011b\",\"version\":1,\"type\":\"toggle\",\"parent_id\":\"00000000-0000-4000-8000-000000000111\",\"parent_table\":\"block\",\"alive\":true,\"space_id\":\"00000000-0000-4000-8000-0000000000aa\",\"created_time\":1792540800000,\"last_edited_time\":1792540800000,\"properties\":{\"title\":[[\"Details\"]]},\"content\":[\"00000000-0000-4000-8000-00000000011c\"]},\"role\":\"editor\"}},\"00000000-0000-4000-8000-00000000011c\":{\"spaceId\":\"00000000-0000-4000-8000-0000000000aa\",\"value\":{\"value\":{\"id\":\"00000000-0000-4000-8000-00000000011c\",\"version\":1,\"type\":\"quote\",\"parent_id\":\"00000000-0000-4000-8000-00000000011b\",\"parent_table\":\"block\",\"alive\":true,\"space_id\":\"00000000-0000-4000-8000-0000000000aa\",\"created_time\":1792540800000,\"last_edited_time\":1792540800000,\"properties\":{\"title\":[[\"Quoted inside a toggle\"]]}},\"role\":\"editor\"}}}}},{\"blockId\":\"00000000-0000-4000-8000-00000000011d\",\"blockSubtree\":{\"__version__\":3,\"block\":{\"00000000-0000-4000-8000-00000000011d\":{\"spaceId\":\"00000000-0000-4000-8000-0000000000aa\",\"value\":{\"value\":{\"id\":\"00000000-0000-4000-8000-00000000011d\",\"version\":1,\"type\":\"code\",\"parent_id\":\"00000000-0000-4000-8000-000000000111\",\"parent_table\":\"block\",\"alive\":true,\"space_id\":\"00000000-0000-4000-8000-0000000000aa\",\"created_time\":1792540800000,\"last_edited_time\":1792540800000,\"properties\":{\"title\":[[\"pnpm install\\npnpm test\"]],\"language\":[[\"Bash\"]]}},\"role\":\"editor\"}}}}},{\"blockId\":\"00000000-0000-4000-8000-00000000011e\",\"blockSubtree\":{\"__version__\":3,\"block\":{\"00000000-0000-4000-8000-00000000011e\":{\"spaceId\":\"00000000-0000-4000-8000-0000000000aa\",\"value\":{\"value\":{\"id\":\"00000000-0000-4000-8000-00000000011e\",\"version\":1,\"type\":\"divider\",\"parent_id\":\"00000000-0000-4000-8000-000000000111\",\"parent_table\":\"block\",\"alive\":true,\"space_id\":\"00000000-0000-4000-8000-0000000000aa\",\"created_time\":1792540800000,\"last_edited_time\":1792540800000},\"role\":\"editor\"}}}}},{\"blockId\":\"00000000-0000-4000-8000-00000000011f\",\"blockSubtree\":{\"__version__\":3,\"block\":{\"00000000-0000-4000-8000-00000000011f\":{\"spaceId\":\"00000000-0000-4000-8000-0000000000aa\",\"value\":{\"value\":{\"id\":\"00000000-0000-4000-8000-00000000011f\",\"version\":1,\"type\":\"equation\",\"parent_id\":\"00000000-0000-4000-8000-000000000111\",\"parent_table\":\"block\",\"alive\":true,\"space_id\":\"00000000-0000-4000-8000-0000000000aa\",\"created_time\":1792540800000,\"last_edited_time\":1792540800000,\"properties\":{\"title\":[[\"\\\\int_0^1 x\\\\,dx\"]]}},\"role\":\"editor\"}}}}}],\"action\":\"copy\",\"wasContiguousSelection\":true}"
+  },
+  "payload": {
+    "blocks": [
+      {
+        "blockId": "00000000-0000-4000-8000-000000000119",
+        "blockSubtree": {
+          "__version__": 3,
+          "block": {
+            "00000000-0000-4000-8000-000000000119": {
+              "spaceId": "00000000-0000-4000-8000-0000000000aa",
+              "value": {
+                "value": {
+                  "id": "00000000-0000-4000-8000-000000000119",
+                  "version": 1,
+                  "type": "header",
+                  "parent_id": "00000000-0000-4000-8000-000000000111",
+                  "parent_table": "block",
+                  "alive": true,
+                  "space_id": "00000000-0000-4000-8000-0000000000aa",
+                  "created_time": 1792540800000,
+                  "last_edited_time": 1792540800000,
+                  "properties": {
+                    "title": [
+                      [
+                        "Release notes"
+                      ]
+                    ]
+                  }
+                },
+                "role": "editor"
+              }
+            }
+          }
+        }
+      },
+      {
+        "blockId": "00000000-0000-4000-8000-00000000011a",
+        "blockSubtree": {
+          "__version__": 3,
+          "block": {
+            "00000000-0000-4000-8000-00000000011a": {
+              "spaceId": "00000000-0000-4000-8000-0000000000aa",
+              "value": {
+                "value": {
+                  "id": "00000000-0000-4000-8000-00000000011a",
+                  "version": 1,
+                  "type": "callout",
+                  "parent_id": "00000000-0000-4000-8000-000000000111",
+                  "parent_table": "block",
+                  "alive": true,
+                  "space_id": "00000000-0000-4000-8000-0000000000aa",
+                  "created_time": 1792540800000,
+                  "last_edited_time": 1792540800000,
+                  "properties": {
+                    "title": [
+                      [
+                        "Read this first"
+                      ]
+                    ]
+                  },
+                  "format": {
+                    "block_color": "gray_background",
+                    "page_icon": "💡"
+                  }
+                },
+                "role": "editor"
+              }
+            }
+          }
+        }
+      },
+      {
+        "blockId": "00000000-0000-4000-8000-00000000011b",
+        "blockSubtree": {
+          "__version__": 3,
+          "block": {
+            "00000000-0000-4000-8000-00000000011b": {
+              "spaceId": "00000000-0000-4000-8000-0000000000aa",
+              "value": {
+                "value": {
+                  "id": "00000000-0000-4000-8000-00000000011b",
+                  "version": 1,
+                  "type": "toggle",
+                  "parent_id": "00000000-0000-4000-8000-000000000111",
+                  "parent_table": "block",
+                  "alive": true,
+                  "space_id": "00000000-0000-4000-8000-0000000000aa",
+                  "created_time": 1792540800000,
+                  "last_edited_time": 1792540800000,
+                  "properties": {
+                    "title": [
+                      [
+                        "Details"
+                      ]
+                    ]
+                  },
+                  "content": [
+                    "00000000-0000-4000-8000-00000000011c"
+                  ]
+                },
+                "role": "editor"
+              }
+            },
+            "00000000-0000-4000-8000-00000000011c": {
+              "spaceId": "00000000-0000-4000-8000-0000000000aa",
+              "value": {
+                "value": {
+                  "id": "00000000-0000-4000-8000-00000000011c",
+                  "version": 1,
+                  "type": "quote",
+                  "parent_id": "00000000-0000-4000-8000-00000000011b",
+                  "parent_table": "block",
+                  "alive": true,
+                  "space_id": "00000000-0000-4000-8000-0000000000aa",
+                  "created_time": 1792540800000,
+                  "last_edited_time": 1792540800000,
+                  "properties": {
+                    "title": [
+                      [
+                        "Quoted inside a toggle"
+                      ]
+                    ]
+                  }
+                },
+                "role": "editor"
+              }
+            }
+          }
+        }
+      },
+      {
+        "blockId": "00000000-0000-4000-8000-00000000011d",
+        "blockSubtree": {
+          "__version__": 3,
+          "block": {
+            "00000000-0000-4000-8000-00000000011d": {
+              "spaceId": "00000000-0000-4000-8000-0000000000aa",
+              "value": {
+                "value": {
+                  "id": "00000000-0000-4000-8000-00000000011d",
+                  "version": 1,
+                  "type": "code",
+                  "parent_id": "00000000-0000-4000-8000-000000000111",
+                  "parent_table": "block",
+                  "alive": true,
+                  "space_id": "00000000-0000-4000-8000-0000000000aa",
+                  "created_time": 1792540800000,
+                  "last_edited_time": 1792540800000,
+                  "properties": {
+                    "title": [
+                      [
+                        "pnpm install\npnpm test"
+                      ]
+                    ],
+                    "language": [
+                      [
+                        "Bash"
+                      ]
+                    ]
+                  }
+                },
+                "role": "editor"
+              }
+            }
+          }
+        }
+      },
+      {
+        "blockId": "00000000-0000-4000-8000-00000000011e",
+        "blockSubtree": {
+          "__version__": 3,
+          "block": {
+            "00000000-0000-4000-8000-00000000011e": {
+              "spaceId": "00000000-0000-4000-8000-0000000000aa",
+              "value": {
+                "value": {
+                  "id": "00000000-0000-4000-8000-00000000011e",
+                  "version": 1,
+                  "type": "divider",
+                  "parent_id": "00000000-0000-4000-8000-000000000111",
+                  "parent_table": "block",
+                  "alive": true,
+                  "space_id": "00000000-0000-4000-8000-0000000000aa",
+                  "created_time": 1792540800000,
+                  "last_edited_time": 1792540800000
+                },
+                "role": "editor"
+              }
+            }
+          }
+        }
+      },
+      {
+        "blockId": "00000000-0000-4000-8000-00000000011f",
+        "blockSubtree": {
+          "__version__": 3,
+          "block": {
+            "00000000-0000-4000-8000-00000000011f": {
+              "spaceId": "00000000-0000-4000-8000-0000000000aa",
+              "value": {
+                "value": {
+                  "id": "00000000-0000-4000-8000-00000000011f",
+                  "version": 1,
+                  "type": "equation",
+                  "parent_id": "00000000-0000-4000-8000-000000000111",
+                  "parent_table": "block",
+                  "alive": true,
+                  "space_id": "00000000-0000-4000-8000-0000000000aa",
+                  "created_time": 1792540800000,
+                  "last_edited_time": 1792540800000,
+                  "properties": {
+                    "title": [
+                      [
+                        "\\int_0^1 x\\,dx"
+                      ]
+                    ]
+                  }
+                },
+                "role": "editor"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "action": "copy",
+    "wasContiguousSelection": true
+  }
+}

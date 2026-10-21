@@ -1,0 +1,198 @@
+{
+  "mime": {
+    "text/plain": "- Fruit\n    - Apple\n    - Pear\n        1. ripe\n- [x] Buy milk\n- [ ] Call back",
+    "text/html": "<ul class=\"bulleted-list\"><li>Fruit<ul class=\"bulleted-list\"><li>Apple</li></ul><ul class=\"bulleted-list\"><li>Pear<ol class=\"numbered-list\" start=\"1\"><li>ripe</li></ol></li></ul></li></ul><ul class=\"to-do-list\"><li><input type=\"checkbox\" class=\"checkbox checkbox-on\" checked disabled/> <span class=\"to-do-children-checked\">Buy milk</span></li></ul><ul class=\"to-do-list\"><li><input type=\"checkbox\" class=\"checkbox checkbox-off\" disabled/> <span class=\"to-do-children-unchecked\">Call back</span></li></ul>",
+    "text/_notion-blocks-v3-production": "{\"blocks\":[{\"blockId\":\"00000000-0000-4000-8000-00000000010b\",\"blockSubtree\":{\"__version__\":3,\"block\":{\"00000000-0000-4000-8000-00000000010b\":{\"spaceId\":\"00000000-0000-4000-8000-0000000000aa\",\"value\":{\"value\":{\"id\":\"00000000-0000-4000-8000-00000000010b\",\"version\":1,\"type\":\"bulleted_list\",\"parent_id\":\"00000000-0000-4000-8000-000000000104\",\"parent_table\":\"block\",\"alive\":true,\"space_id\":\"00000000-0000-4000-8000-0000000000aa\",\"created_time\":1792540800000,\"last_edited_time\":1792540800000,\"properties\":{\"title\":[[\"Fruit\"]]},\"content\":[\"00000000-0000-4000-8000-00000000010c\",\"00000000-0000-4000-8000-00000000010d\"]},\"role\":\"editor\"}},\"00000000-0000-4000-8000-00000000010c\":{\"spaceId\":\"00000000-0000-4000-8000-0000000000aa\",\"value\":{\"value\":{\"id\":\"00000000-0000-4000-8000-00000000010c\",\"version\":1,\"type\":\"bulleted_list\",\"parent_id\":\"00000000-0000-4000-8000-00000000010b\",\"parent_table\":\"block\",\"alive\":true,\"space_id\":\"00000000-0000-4000-8000-0000000000aa\",\"created_time\":1792540800000,\"last_edited_time\":1792540800000,\"properties\":{\"title\":[[\"Apple\"]]}},\"role\":\"editor\"}},\"00000000-0000-4000-8000-00000000010d\":{\"spaceId\":\"00000000-0000-4000-8000-0000000000aa\",\"value\":{\"value\":{\"id\":\"00000000-0000-4000-8000-00000000010d\",\"version\":1,\"type\":\"bulleted_list\",\"parent_id\":\"00000000-0000-4000-8000-00000000010b\",\"parent_table\":\"block\",\"alive\":true,\"space_id\":\"00000000-0000-4000-8000-0000000000aa\",\"created_time\":1792540800000,\"last_edited_time\":1792540800000,\"properties\":{\"title\":[[\"Pear\"]]},\"content\":[\"00000000-0000-4000-8000-00000000010e\"]},\"role\":\"editor\"}},\"00000000-0000-4000-8000-00000000010e\":{\"spaceId\":\"00000000-0000-4000-8000-0000000000aa\",\"value\":{\"value\":{\"id\":\"00000000-0000-4000-8000-00000000010e\",\"version\":1,\"type\":\"numbered_list\",\"parent_id\":\"00000000-0000-4000-8000-00000000010d\",\"parent_table\":\"block\",\"alive\":true,\"space_id\":\"00000000-0000-4000-8000-0000000000aa\",\"created_time\":1792540800000,\"last_edited_time\":1792540800000,\"properties\":{\"title\":[[\"ripe\"]]}},\"role\":\"editor\"}}}}},{\"blockId\":\"00000000-0000-4000-8000-00000000010f\",\"blockSubtree\":{\"__version__\":3,\"block\":{\"00000000-0000-4000-8000-00000000010f\":{\"spaceId\":\"00000000-0000-4000-8000-0000000000aa\",\"value\":{\"value\":{\"id\":\"00000000-0000-4000-8000-00000000010f\",\"version\":1,\"type\":\"to_do\",\"parent_id\":\"00000000-0000-4000-8000-000000000104\",\"parent_table\":\"block\",\"alive\":true,\"space_id\":\"00000000-0000-4000-8000-0000000000aa\",\"created_time\":1792540800000,\"last_edited_time\":1792540800000,\"properties\":{\"title\":[[\"Buy milk\"]],\"checked\":[[\"Yes\"]]}},\"role\":\"editor\"}}}}},{\"blockId\":\"00000000-0000-4000-8000-000000000110\",\"blockSubtree\":{\"__version__\":3,\"block\":{\"00000000-0000-4000-8000-000000000110\":{\"spaceId\":\"00000000-0000-4000-8000-0000000000aa\",\"value\":{\"value\":{\"id\":\"00000000-0000-4000-8000-000000000110\",\"version\":1,\"type\":\"to_do\",\"parent_id\":\"00000000-0000-4000-8000-000000000104\",\"parent_table\":\"block\",\"alive\":true,\"space_id\":\"00000000-0000-4000-8000-0000000000aa\",\"created_time\":1792540800000,\"last_edited_time\":1792540800000,\"properties\":{\"title\":[[\"Call back\"]],\"checked\":[[\"No\"]]}},\"role\":\"editor\"}}}}}],\"action\":\"copy\",\"wasContiguousSelection\":true}"
+  },
+  "payload": {
+    "blocks": [
+      {
+        "blockId": "00000000-0000-4000-8000-00000000010b",
+        "blockSubtree": {
+          "__version__": 3,
+          "block": {
+            "00000000-0000-4000-8000-00000000010b": {
+              "spaceId": "00000000-0000-4000-8000-0000000000aa",
+              "value": {
+                "value": {
+                  "id": "00000000-0000-4000-8000-00000000010b",
+                  "version": 1,
+                  "type": "bulleted_list",
+                  "parent_id": "00000000-0000-4000-8000-000000000104",
+                  "parent_table": "block",
+                  "alive": true,
+                  "space_id": "00000000-0000-4000-8000-0000000000aa",
+                  "created_time": 1792540800000,
+                  "last_edited_time": 1792540800000,
+                  "properties": {
+                    "title": [
+                      [
+                        "Fruit"
+                      ]
+                    ]
+                  },
+                  "content": [
+                    "00000000-0000-4000-8000-00000000010c",
+                    "00000000-0000-4000-8000-00000000010d"
+                  ]
+                },
+                "role": "editor"
+              }
+            },
+            "00000000-0000-4000-8000-00000000010c": {
+              "spaceId": "00000000-0000-4000-8000-0000000000aa",
+              "value": {
+                "value": {
+                  "id": "00000000-0000-4000-8000-00000000010c",
+                  "version": 1,
+                  "type": "bulleted_list",
+                  "parent_id": "00000000-0000-4000-8000-00000000010b",
+                  "parent_table": "block",
+                  "alive": true,
+                  "space_id": "00000000-0000-4000-8000-0000000000aa",
+                  "created_time": 1792540800000,
+                  "last_edited_time": 1792540800000,
+                  "properties": {
+                    "title": [
+                      [
+                        "Apple"
+                      ]
+                    ]
+                  }
+                },
+                "role": "editor"
+              }
+            },
+            "00000000-0000-4000-8000-00000000010d": {
+              "spaceId": "00000000-0000-4000-8000-0000000000aa",
+              "value": {
+                "value": {
+                  "id": "00000000-0000-4000-8000-00000000010d",
+                  "version": 1,
+                  "type": "bulleted_list",
+                  "parent_id": "00000000-0000-4000-8000-00000000010b",
+                  "parent_table": "block",
+                  "alive": true,
+                  "space_id": "00000000-0000-4000-8000-0000000000aa",
+                  "created_time": 1792540800000,
+                  "last_edited_time": 1792540800000,
+                  "properties": {
+                    "title": [
+                      [
+                        "Pear"
+                      ]
+                    ]
+                  },
+                  "content": [
+                    "00000000-0000-4000-8000-00000000010e"
+                  ]
+                },
+                "role": "editor"
+              }
+            },
+            "00000000-0000-4000-8000-00000000010e": {
+              "spaceId": "00000000-0000-4000-8000-0000000000aa",
+              "value": {
+                "value": {
+                  "id": "00000000-0000-4000-8000-00000000010e",
+                  "version": 1,
+                  "type": "numbered_list",
+                  "parent_id": "00000000-0000-4000-8000-00000000010d",
+                  "parent_table": "block",
+                  "alive": true,
+                  "space_id": "00000000-0000-4000-8000-0000000000aa",
+                  "created_time": 1792540800000,
+                  "last_edited_time": 1792540800000,
+                  "properties": {
+                    "title": [
+                      [
+                        "ripe"
+                      ]
+                    ]
+                  }
+                },
+                "role": "editor"
+              }
+            }
+          }
+        }
+      },
+      {
+        "blockId": "00000000-0000-4000-8000-00000000010f",
+        "blockSubtree": {
+          "__version__": 3,
+          "block": {
+            "00000000-0000-4000-8000-00000000010f": {
+              "spaceId": "00000000-0000-4000-8000-0000000000aa",
+              "value": {
+                "value": {
+                  "id": "00000000-0000-4000-8000-00000000010f",
+                  "version": 1,
+                  "type": "to_do",
+                  "parent_id": "00000000-0000-4000-8000-000000000104",
+                  "parent_table": "block",
+                  "alive": true,
+                  "space_id": "00000000-0000-4000-8000-0000000000aa",
+                  "created_time": 1792540800000,
+                  "last_edited_time": 1792540800000,
+                  "properties": {
+                    "title": [
+                      [
+                        "Buy milk"
+                      ]
+                    ],
+                    "checked": [
+                      [
+                        "Yes"
+                      ]
+                    ]
+                  }
+                },
+                "role": "editor"
+              }
+            }
+          }
+        }
+      },
+      {
+        "blockId": "00000000-0000-4000-8000-000000000110",
+        "blockSubtree": {
+          "__version__": 3,
+          "block": {
+            "00000000-0000-4000-8000-000000000110": {
+              "spaceId": "00000000-0000-4000-8000-0000000000aa",
+              "value": {
+                "value": {
+                  "id": "00000000-0000-4000-8000-000000000110",
+                  "version": 1,
+                  "type": "to_do",
+                  "parent_id": "00000000-0000-4000-8000-000000000104",
+                  "parent_table": "block",
+                  "alive": true,
+                  "space_id": "00000000-0000-4000-8000-0000000000aa",
+                  "created_time": 1792540800000,
+                  "last_edited_time": 1792540800000,
+                  "properties": {
+                    "title": [
+                      [
+                        "Call back"
+                      ]
+                    ],
+                    "checked": [
+                      [
+                        "No"
+                      ]
+                    ]
+                  }
+                },
+                "role": "editor"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "action": "copy",
+    "wasContiguousSelection": true
+  }
+}
