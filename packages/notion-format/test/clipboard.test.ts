@@ -125,3 +125,43 @@ describe("live paste check regressions (2026-10-22)", () => {
     expect(marks).toEqual(["yellow_background", "red", "yellow_background"]);
   });
 });
+
+describe("Notion paste parser forms (evidence 2026-10-22)", () => {
+  const hl = (color: string) => ({ type: "paragraph" as const, text: [{ text: "mark", marks: { color: color as never } }] });
+
+  it("writes highlights as mark with data-notion-highlight and keeps the inline style fallback", () => {
+    const html = encodeInputs([hl("yellow_background")])["text/html"]!;
+    expect(html).toBe('<p><mark class="highlight-yellow_background" data-notion-highlight="yellow_background" style="background-color:#fbf3db">mark</mark></p>');
+  });
+
+  it("uses Notion's teal name for green in HTML and in the block payload, and reads it back as green", () => {
+    const data = encodeInputs([hl("green_background"), { type: "callout", text: text("c"), props: { icon: "x", color: "green_background" } }]);
+    expect(data["text/html"]).toContain('data-notion-highlight="teal_background"');
+    expect(data["text/html"]).toContain("highlight-green_background");
+    const json = data[BLOCKWISE_BLOCKS_MIME]!;
+    expect(json).toContain('["h","teal_background"]');
+    expect(json).toContain('"block_color":"teal_background"');
+    expect(json).not.toContain("green");
+    const back = decodeClipboard({ [BLOCKWISE_BLOCKS_MIME]: json }).blocks;
+    expect(back[0]!.text![0]!.marks!.color).toBe("green_background");
+    expect(back[1]!.props!.color).toBe("green_background");
+  });
+
+  it("writes block colors as data-notion-highlight on the block element", () => {
+    const html = encodeInputs([{ type: "paragraph", text: text("p"), props: { color: "red" } }])["text/html"]!;
+    expect(html).toBe('<p class="block-color-red" data-notion-highlight="red">p</p>');
+  });
+
+  it("writes inline equations with data-notion-inline-equation", () => {
+    const html = encodeInputs([{ type: "paragraph", text: [{ text: "e^{i\\pi}+1=0", equation: "e^{i\\pi}+1=0" }] }])["text/html"]!;
+    expect(html).toBe('<p><span class="notion-text-equation-token" data-notion-inline-equation="e^{i\\pi}+1=0" data-tex="e^{i\\pi}+1=0" contenteditable="false">e^{i\\pi}+1=0</span></p>');
+  });
+
+  it("reads Notion's own HTML forms", () => {
+    const r = decodeClipboard({ "text/html": '<p><mark class="highlight-teal_background" data-notion-highlight="teal_background">g</mark> <span class="notion-text-equation-token" data-notion-inline-equation="x^2" contenteditable="false"><span class="katex">junk</span></span> <span class="katex"><annotation encoding="application/x-tex">y_1</annotation></span></p>' });
+    const spans = r.blocks[0]!.text!.filter((s) => s.text.trim());
+    expect(spans[0]!.marks!.color).toBe("green_background");
+    expect(spans[1]!.equation).toBe("x^2");
+    expect(spans[2]!.equation).toBe("y_1");
+  });
+});

@@ -1,7 +1,7 @@
 {
   "mime": {
     "text/plain": "Plain, **bold**, [*italic link*](https://example.com) and $E=mc^2$",
-    "text/html": "<p>Plain, <strong>bold</strong>, <a href=\"https://example.com\"><em>italic link</em></a> and <span class=\"notion-text-equation-token\" data-tex=\"E=mc^2\">E=mc^2</span></p>",
+    "text/html": "<p>Plain, <strong>bold</strong>, <a href=\"https://example.com\"><em>italic link</em></a> and <span class=\"notion-text-equation-token\" data-notion-inline-equation=\"E=mc^2\" data-tex=\"E=mc^2\" contenteditable=\"false\">E=mc^2</span></p>",
     "text/_notion-blocks-v3-production": "{\"blocks\":[{\"blockId\":\"00000000-0000-4000-8000-000000000103\",\"blockSubtree\":{\"__version__\":3,\"block\":{\"00000000-0000-4000-8000-000000000103\":{\"spaceId\":\"00000000-0000-4000-8000-0000000000aa\",\"value\":{\"value\":{\"id\":\"00000000-0000-4000-8000-000000000103\",\"version\":1,\"type\":\"text\",\"parent_id\":\"00000000-0000-4000-8000-000000000101\",\"parent_table\":\"block\",\"alive\":true,\"space_id\":\"00000000-0000-4000-8000-0000000000aa\",\"created_time\":1792540800000,\"last_edited_time\":1792540800000,\"properties\":{\"title\":[[\"Plain, \"],[\"bold\",[[\"b\"]]],[\", \"],[\"italic link\",[[\"i\"],[\"a\",\"https://example.com\"]]],[\" and \"],[\"⁍\",[[\"e\",\"E=mc^2\"]]]]}},\"role\":\"editor\"}}}}}],\"action\":\"copy\",\"wasContiguousSelection\":true}"
   },
   "payload": {
