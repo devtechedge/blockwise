@@ -154,3 +154,69 @@ test("text colors render as text colors and backgrounds as highlights", async ({
   expect(await colour.evaluate((e) => getComputedStyle(e).backgroundColor)).toBe("rgba(0, 0, 0, 0)");
   expect(await hl.evaluate((e) => getComputedStyle(e).backgroundColor)).not.toBe("rgba(0, 0, 0, 0)");
 });
+
+test("block menu sets block colors on the selection with undo, and copy carries them", async ({ page }) => {
+  await freshPage(page);
+  await page.keyboard.type("first");
+  await page.keyboard.press("Enter");
+  await page.keyboard.type("second");
+  const rows = page.locator(".blocks > .block");
+  const content = (i: number) => rows.nth(i).locator("> .block-content");
+  await rows.nth(0).hover();
+  await rows.nth(0).locator(".handle").click();
+  const menu = page.getByRole("menu", { name: "Block menu" });
+  await expect(menu).toBeVisible();
+  await expect(menu.getByRole("menuitem")).toHaveText(["Delete", "Duplicate", /Turn into/, /Color/]);
+  await menu.getByRole("menuitem", { name: /^Color/ }).click();
+  await expect(page.getByRole("menu", { name: "Color" }).getByRole("menuitem")).toHaveCount(20);
+  await page.getByRole("menuitem", { name: "Red background" }).click();
+  await expect(menu).toBeHidden();
+  await expect(content(0)).toHaveClass(/block-color-red_background/);
+  expect(await content(0).evaluate((e) => getComputedStyle(e).backgroundColor)).not.toBe("rgba(0, 0, 0, 0)");
+
+  // Multi block: shift click adds to the selection, right click opens the menu for all of it.
+  await rows.nth(1).hover();
+  await rows.nth(1).locator(".handle").click({ modifiers: ["Shift"] });
+  await expect(page.locator(".block.selected")).toHaveCount(2);
+  await rows.nth(1).locator(".handle").click({ button: "right" });
+  await page.getByRole("menuitem", { name: /^Color/ }).click();
+  await page.getByRole("menuitem", { name: "Blue text" }).click();
+  await expect(content(0)).toHaveClass(/block-color-blue(\s|$)/);
+  await expect(content(1)).toHaveClass(/block-color-blue(\s|$)/);
+
+  const data = await page.evaluate(() => {
+    const dt = new DataTransfer();
+    document.dispatchEvent(new ClipboardEvent("copy", { clipboardData: dt, bubbles: true, cancelable: true }));
+    return Object.fromEntries(dt.types.map((t) => [t, dt.getData(t)]));
+  });
+  expect(data["text/html"]).toContain('data-notion-highlight="blue" style="color:#337ea9"');
+  expect(data["application/x-blockwise-blocks-v3"]).toContain('"block_color":"blue"');
+
+  await page.keyboard.press(`${mod}+z`);
+  await expect(content(0)).toHaveClass(/block-color-red_background/);
+  await expect(content(1)).not.toHaveClass(/block-color/);
+});
+
+test("block menu turn into, duplicate and delete", async ({ page }) => {
+  await freshPage(page);
+  await page.keyboard.type("item");
+  const rows = page.locator(".blocks > .block");
+  await rows.nth(0).hover();
+  await rows.nth(0).locator(".handle").click();
+  await page.getByRole("menuitem", { name: /^Turn into/ }).click();
+  await page.getByRole("menuitem", { name: "Heading 2" }).click();
+  await expect(rows.nth(0)).toHaveAttribute("data-type", "heading_2");
+  await rows.nth(0).hover();
+  await rows.nth(0).locator(".handle").click();
+  await page.getByRole("menuitem", { name: "Duplicate" }).click();
+  await expect(rows).toHaveCount(2);
+  await rows.nth(1).hover();
+  await rows.nth(1).locator(".handle").click();
+  await page.getByRole("menuitem", { name: "Delete" }).click();
+  await expect(rows).toHaveCount(1);
+});
+
+test("demo page has a block colored block", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator(".blocks .block-color-blue_background", { hasText: "Block color" })).toBeVisible();
+});
