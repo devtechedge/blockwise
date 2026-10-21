@@ -8,7 +8,22 @@ export function escapeHtml(s: string): string {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
-export function inlineToHtml(rt: RichText): string {
+/** Notion's light theme palette, used for inline styles on the clipboard and to read pasted styles back. */
+export const COLOR_RGB: Record<string, [number, number, number]> = {
+  gray: [120, 119, 116], brown: [159, 107, 83], orange: [217, 115, 13], yellow: [203, 145, 47], green: [68, 131, 97],
+  blue: [51, 126, 169], purple: [144, 101, 176], pink: [193, 76, 138], red: [212, 76, 71],
+  gray_background: [241, 241, 239], brown_background: [244, 238, 238], orange_background: [251, 236, 221], yellow_background: [251, 243, 219],
+  green_background: [237, 243, 236], blue_background: [231, 243, 248], purple_background: [246, 243, 249], pink_background: [250, 241, 245], red_background: [253, 235, 236],
+};
+const hex = (c: [number, number, number]) => "#" + c.map((x) => x.toString(16).padStart(2, "0")).join("");
+
+function colorStyle(c: Color): string {
+  const rgb = COLOR_RGB[c];
+  if (!rgb) return "";
+  return c.endsWith("_background") ? `background-color:${hex(rgb)}` : `color:${hex(rgb)}`;
+}
+
+export function inlineToHtml(rt: RichText, opts: { inlineStyles?: boolean } = {}): string {
   return normalize(rt).map((s) => {
     if (s.equation !== undefined) return `<span class="notion-text-equation-token" data-tex="${escapeHtml(s.equation)}">${escapeHtml(s.equation)}</span>`;
     if (s.mention) {
@@ -24,13 +39,24 @@ export function inlineToHtml(rt: RichText): string {
     if (mk.underline) h = `<span style="border-bottom:0.05em solid">${h}</span>`;
     if (mk.italic) h = `<em>${h}</em>`;
     if (mk.bold) h = `<strong>${h}</strong>`;
-    if (mk.color) h = `<mark class="highlight-${mk.color}">${h}</mark>`;
+    if (mk.color) h = opts.inlineStyles
+      ? `<span class="highlight-${mk.color}" style="${colorStyle(mk.color)}">${h}</span>`
+      : `<mark class="highlight-${mk.color}">${h}</mark>`;
     if (mk.link) h = `<a href="${escapeHtml(mk.link)}">${h}</a>`;
     return h;
   }).join("");
 }
 
-export interface HtmlOptions { imagePath?: (url: string) => string; ids?: boolean }
+export interface HtmlOptions {
+  imagePath?: (url: string) => string;
+  ids?: boolean;
+  /**
+   * Clipboard dialect: toggles as bare <details>, colors as inline styles.
+   * Notion's paste parser reads a toggle wrapped in <ul><li> as a bulleted item
+   * and ignores class based highlights (live paste check, 2026-10-22).
+   */
+  clipboard?: boolean;
+}
 
 function attrs(b: BlockInput, cls: string | null, opts: HtmlOptions): string {
   const parts: string[] = [];
@@ -44,7 +70,7 @@ export function blocksToHtml(blocks: BlockInput[], opts: HtmlOptions = {}): stri
   let numberRun = 0;
   return blocks.map((b, i) => {
     numberRun = b.type === "numbered_list_item" ? (blocks[i - 1]?.type === "numbered_list_item" ? numberRun + 1 : 1) : 0;
-    const t = inlineToHtml(b.text ?? []);
+    const t = inlineToHtml(b.text ?? [], { inlineStyles: opts.clipboard });
     const kids = b.children?.length ? blocksToHtml(b.children, opts) : "";
     const indented = kids ? `<div class="indented">${kids}</div>` : "";
     switch (b.type) {
@@ -58,7 +84,9 @@ export function blocksToHtml(blocks: BlockInput[], opts: HtmlOptions = {}): stri
         const on = Boolean(b.props?.checked);
         return `<ul${attrs(b, "to-do-list", opts)}><li><input type="checkbox" class="checkbox ${on ? "checkbox-on" : "checkbox-off"}"${on ? " checked" : ""} disabled/> <span class="to-do-children-${on ? "checked" : "unchecked"}">${t}</span>${indented}</li></ul>`;
       }
-      case "toggle": return `<ul${attrs(b, "toggle", opts)}><li><details open=""><summary>${t}</summary>${indented}</details></li></ul>`;
+      case "toggle":
+        if (opts.clipboard) return `<details${attrs(b, "toggle", opts)} open=""><summary>${t}</summary>${kids}</details>`;
+        return `<ul${attrs(b, "toggle", opts)}><li><details open=""><summary>${t}</summary>${indented}</details></li></ul>`;
       case "quote": return `<blockquote${attrs(b, null, opts)}>${t}${kids}</blockquote>`;
       case "callout": return `<aside${attrs(b, "callout", opts)}><span class="icon">${escapeHtml(b.props?.icon ?? "")}</span><div>${t}${kids}</div></aside>`;
       case "code": return `<pre${attrs(b, "code", opts)}><code class="language-${escapeHtml((b.props?.language ?? "plain text").replace(/ /g, "-"))}">${escapeHtml(plain(b.text ?? []))}</code></pre>`;
@@ -101,8 +129,38 @@ function el(n: Node): HTMLElement | null { return n instanceof HTMLElement ? n :
 function cls(e: HTMLElement): string[] { return (e.getAttribute("class") ?? "").split(/\s+/).filter(Boolean); }
 function styleOf(e: HTMLElement): string { return (e.getAttribute("style") ?? "").toLowerCase().replace(/\s+/g, ""); }
 
+function parseCssColor(v: string): [number, number, number] | null {
+  const m = v.match(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i);
+  if (m) { const h = m[1]!.length === 3 ? m[1]!.split("").map((x) => x + x).join("") : m[1]!; return [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16)) as [number, number, number]; }
+  const r = v.match(/^rgba?\((\d+),(\d+),(\d+)(?:,([\d.]+))?\)$/);
+  if (r) { if (r[4] !== undefined && Number(r[4]) === 0) return null; return [Number(r[1]), Number(r[2]), Number(r[3])]; }
+  return null;
+}
+
+/** Nearest Notion color for a CSS color, or undefined for black, white and near greys of text. */
+export function nearestColor(css: string, background: boolean): Color | undefined {
+  const rgb = parseCssColor(css);
+  if (!rgb) return undefined;
+  const [r, g, b] = rgb;
+  if (background ? r + g + b > 750 : Math.max(r, g, b) - Math.min(r, g, b) < 12 && r < 100) return undefined; // white bg or default ink
+  let best: string | undefined; let dist = Infinity;
+  for (const [name, c] of Object.entries(COLOR_RGB)) {
+    if (name.endsWith("_background") !== background) continue;
+    const d = (c[0] - r) ** 2 + (c[1] - g) ** 2 + (c[2] - b) ** 2;
+    if (d < dist) { dist = d; best = name; }
+  }
+  // Saturated highlighter colors (Docs, Word) are far from Notion's pastels: still the nearest hue wins.
+  return best as Color | undefined;
+}
+
 function colorFrom(e: HTMLElement): Color | undefined {
   for (const c of cls(e)) { const m = c.match(HIGHLIGHT); if (m && m[1] !== "default") return m[1] as Color; }
+  const st = styleOf(e);
+  const bg = st.match(/background(?:-color)?:([^;]+)/);
+  if (bg) { const c = nearestColor(bg[1]!, true); if (c) return c; }
+  const fg = st.match(/(?:^|;)color:([^;]+)/);
+  if (fg) { const c = nearestColor(fg[1]!, false); if (c) return c; }
+  if (e.tagName?.toLowerCase() === "mark") return "yellow_background";
   return undefined;
 }
 
