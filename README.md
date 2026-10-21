@@ -1,46 +1,84 @@
 # Blockwise
 
-A local first, open source block editor whose content moves cleanly to and from Notion: copy and paste blocks both ways, import and export Notion's Markdown, CSV and HTML archives, and optionally push or pull pages through the official API.
+A local first, open source block editor whose content moves cleanly to and from Notion.
 
-**Live demo:** https://blockwise-cyan.vercel.app
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel-black?logo=vercel)](https://blockwise-cyan.vercel.app)
+[![CI](https://github.com/devtechedge/blockwise/actions/workflows/ci.yml/badge.svg)](https://github.com/devtechedge/blockwise/actions/workflows/ci.yml)
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
-![Blockwise editor](docs/screenshots/editor-light.png)
+---
+
+## Live Demo
+
+**https://blockwise-cyan.vercel.app**
+
+> **Status:** Fully client side. Pages are stored in your own browser (IndexedDB) and start from a small demo workspace; use "Reset demo" to restore it. Nothing is sent anywhere unless you export a file or use the optional Notion API sync with your own integration secret.
+
+---
+
+## Screenshots
+
+| Editor | Database |
+|--------|----------|
+| ![Editor in light mode](docs/screenshots/01-editor-light.png) | ![Inline database with typed properties](docs/screenshots/02-database.png) |
+
+| Dark mode | Slash menu |
+|-----------|------------|
+| ![Editor in dark mode](docs/screenshots/03-editor-dark.png) | ![Slash command menu](docs/screenshots/04-slash-menu.png) |
+
+---
 
 ## Features
 
-- Block editor with headings, lists, to-dos, toggles, quotes, callouts, code, equations, images, simple tables, columns, sub pages and inline databases
-- Slash menu, Markdown shortcuts, inline formatting toolbar, drag to reorder, keyboard block selection, undo and redo
-- Clipboard bridge: writes Notion's block payload plus HTML and plain text, and reads all three ([spec](docs/specs/clipboard.md))
-- Import a Notion "Markdown & CSV" or "HTML" export zip, and export the same shapes back ([spec](docs/specs/export.md))
-- Databases with typed properties, filter and sort, and Notion CSV round trips ([spec](docs/specs/database.md))
-- Optional Notion API sync from the web app or a CLI, with your own integration secret ([spec](docs/specs/sync.md))
-- Everything is stored in your browser (IndexedDB). Light and dark themes.
+- **Block editor**: headings, lists, to-dos, toggles, quotes, callouts, code, equations, images, simple tables, columns, sub pages and inline databases
+- **Fast editing**: slash menu, Markdown shortcuts, inline formatting toolbar, drag to reorder, keyboard block selection, undo and redo
+- **Clipboard bridge**: copies Notion's block payload alongside HTML and plain text, and pastes any of the three ([format spec](docs/specs/clipboard.md))
+- **Import and export**: Notion "Markdown & CSV" and "HTML" export zips, in both directions ([format spec](docs/specs/export.md))
+- **Databases**: typed properties, filters, sorts and Notion CSV round trips ([spec](docs/specs/database.md))
+- **Optional API sync**: push or pull pages with the official Notion API from the app or a CLI ([spec](docs/specs/sync.md))
+- Light and dark themes, autosave, works offline after first load
 
-See the [compatibility matrix](docs/compatibility.md) and [limitations](docs/limitations.md).
+See the [compatibility matrix](docs/compatibility.md) and the [known limitations](docs/limitations.md).
 
-## How the formats were derived
+---
 
-The clipboard schema was traced with REA in Notion 7.40.0's desktop app and the public web bundle it loads. Each artifact and analysis run is recorded with its SHA-256 in [`evidence/`](evidence/README.md), and `scripts/capture-evidence.sh` reproduces it. No Notion code or assets are included in this repository.
+## Tech Stack
 
-## Develop
+| Layer | Technology |
+|-------|------------|
+| Frontend | Next.js 15 (App Router), React 19, TypeScript |
+| Editor core | Framework free TypeScript packages: document model, formats, databases, interop, sync |
+| Data | IndexedDB in the browser, zip archives via fflate |
+| Sync | `@notionhq/client` through a page and block only pass-through route |
+| Tests | Vitest (92 unit tests), Playwright (10 end to end tests) |
+| Hosting | Vercel |
+| CI | GitHub Actions |
+
+---
+
+## Quick start
 
 ```bash
 pnpm install
-pnpm build        # all packages and the web app
-pnpm test         # Vitest
-pnpm e2e          # Playwright
-pnpm --filter @blockwise/web dev
+pnpm build
+pnpm --filter @blockwise/web dev     # http://localhost:3000
+pnpm test                            # unit tests
+pnpm e2e                             # Playwright
 ```
 
-Packages: `core` (document model), `notion-format` (clipboard, Markdown, HTML), `database`, `interop` (zip import and export), `notion-sync` (API and CLI), and `apps/web`. See [architecture](docs/architecture.md).
-
-CLI sync, with a token you create at notion.so/profile/integrations:
+CLI sync with your own integration secret:
 
 ```bash
 NOTION_TOKEN=... pnpm --filter @blockwise/notion-sync exec blockwise-sync pull <page-url> page.json
 ```
 
-## Not affiliated
+---
+
+## How the formats were derived
+
+The clipboard schema was traced in Notion's desktop app and the public web bundle it loads. Every artifact and analysis run is recorded with its SHA-256 in the [evidence log](evidence/README.md), together with a script that reproduces it. No Notion code or assets are included.
 
 Blockwise is an independent project. It is not affiliated with or endorsed by Notion Labs, Inc. "Notion" is a trademark of its owner and is used here only to describe compatibility.
 
