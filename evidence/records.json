@@ -1,0 +1,268 @@
+{
+  "schema": "blockwise.evidence/v1",
+  "captured_at": "2026-10-21T16:15:00Z",
+  "host": "linux x64, Node 22.20.0",
+  "artifacts": [
+    {
+      "name": "Notion Setup 7.40.0.exe",
+      "source": "https://desktop-release.notion-static.com/Notion%20Setup%207.40.0.exe",
+      "sha256": "c6cc1b5cdb016bf9f9445906ea6a499c8f46a72c568991ea36acf6cc823b7bfe",
+      "bytes": 120016392
+    },
+    {
+      "name": "resources/app.asar (7.40.0, from app-64.7z)",
+      "sha256": "afb4684fa08d12d7ccd3c89e2ad195de7047859d437e721689a5cbfc69403549",
+      "bytes": 26086793
+    },
+    {
+      "name": ".webpack/renderer/tab_browser_view/preload.js",
+      "sha256": "0a658e3841e42e5797c07909182f44c86cabe7b95bcab9a9ba426d541dd02405"
+    },
+    {
+      "name": ".webpack/main/index.js",
+      "sha256": "005294a8afa788a919df252a9ec824f5e5402fc774803677449bfc707f0b5109"
+    },
+    {
+      "name": "notion.so/_assets/11906-2b10cc89fc0f0830.js",
+      "fetched": "2026-10-21",
+      "sha256": "b0271a07adc48b95058f9a05d8fdf2f59a5be32385e3e0f5e128fed6fab3e15c",
+      "bytes": 16929
+    },
+    {
+      "name": "notion.so/_assets/9073-319c74553d1d495c.js",
+      "fetched": "2026-10-21",
+      "sha256": "a8d9903dc4adb09ef8cf9c1b6deea0cd4ca3c091837a86ef9015982c0cc942de",
+      "bytes": 109375
+    },
+    {
+      "name": "notion.so/_assets/clipboardActions-13707130644731f1.js",
+      "fetched": "2026-10-21",
+      "sha256": "f261a6e70ced1d77519397d1d25abccf63f927ceefce2661989782aa0e88b8c5",
+      "bytes": 36158
+    }
+  ],
+  "runs": [
+    {
+      "name": "preload",
+      "rea_version": "6.7.0",
+      "command": "rea analyze-javascript-application",
+      "input": "asar/.webpack/renderer/tab_browser_view",
+      "evidence_id": "ev_2541c4fefcbf3f544fb501eac7787192e034e308546ee7990bdd15f5bb2830c1",
+      "output_sha256": "d578d01a48251f5c47c9ae6bf2be6f73a130e215420a296c6e10674669cec7e3",
+      "output_bytes": 56972754,
+      "summary": {
+        "browser_windows": 0,
+        "explicit_web_preferences": 0,
+        "preload_entrypoints": 0,
+        "context_bridge_apis": 5,
+        "exposed_api_members": 232,
+        "ipc": {
+          "operations": 1,
+          "literal_channels": 1,
+          "dynamic_channel_operations": 0,
+          "renderer_transmissions": 0,
+          "renderer_listeners": 1,
+          "main_handlers": 0,
+          "paired_renderer_transmissions": 0,
+          "ambiguous_renderer_transmissions": 0,
+          "unpaired_literal_renderer_transmissions": 0
+        },
+        "sender_validation_observations": 0,
+        "utility_processes": 0,
+        "resolved_utility_entrypoints": 0,
+        "native_addon_bindings": 0,
+        "resolved_native_addon_bindings": 0
+      },
+      "statistics": {
+        "relevant_files": 1,
+        "nested_asar_containers": 0,
+        "text_bytes_read": 401659,
+        "invalid_utf8_files": 0,
+        "parsed_javascript_files": 1,
+        "skipped_javascript_files": 0,
+        "visited_ast_nodes": 93657,
+        "findings": 270,
+        "modules": 126,
+        "parse_failures": 0
+      },
+      "limitations": [
+        "CommonJS and ESM binding relationships were recovered from inert syntax and resolved only within the inventoried artifact container.",
+        "Electron API identity follows proven lexical module aliases and structurally verified module-namespace interop. Other reassignments, dynamic selections, and visibly overwritten namespace members are unresolved; missing findings do not establish absence. Arbitrary call side effects and runtime registration are not evaluated.",
+        "Electron relationships are derived from inert syntax; runtime registration, reachability, defaults, and enforcement remain unproven.",
+        "Graph coverage is incomplete; unavailable facts remain explicit and must not be read as absence.",
+        "JavaScript and HTML were parsed as inert text; bundle bootstrap code was never executed.",
+        "Static imports, entrypoints, workers, endpoints, and storage relationships do not prove runtime execution."
+      ]
+    },
+    {
+      "name": "web-editor",
+      "rea_version": "6.7.0",
+      "command": "rea analyze-javascript-application",
+      "input": "web-editor/ (3 public web chunks)",
+      "evidence_id": "ev_a9946e79b3d838dfa3744a1ff5cf44a7479b520dae09c2ba3ea1ba09c9ef6f1c",
+      "output_sha256": "8a9d4020c0d72c4f025b700659f087a22fdf469f87b457a2526471f14741f739",
+      "output_bytes": 57778683,
+      "summary": {
+        "browser_windows": 0,
+        "explicit_web_preferences": 0,
+        "preload_entrypoints": 0,
+        "context_bridge_apis": 0,
+        "exposed_api_members": 0,
+        "ipc": {
+          "operations": 0,
+          "literal_channels": 0,
+          "dynamic_channel_operations": 0,
+          "renderer_transmissions": 0,
+          "renderer_listeners": 0,
+          "main_handlers": 0,
+          "paired_renderer_transmissions": 0,
+          "ambiguous_renderer_transmissions": 0,
+          "unpaired_literal_renderer_transmissions": 0
+        },
+        "sender_validation_observations": 0,
+        "utility_processes": 0,
+        "resolved_utility_entrypoints": 0,
+        "native_addon_bindings": 0,
+        "resolved_native_addon_bindings": 0
+      },
+      "statistics": {
+        "relevant_files": 3,
+        "nested_asar_containers": 0,
+        "text_bytes_read": 162462,
+        "invalid_utf8_files": 0,
+        "parsed_javascript_files": 3,
+        "skipped_javascript_files": 0,
+        "visited_ast_nodes": 45156,
+        "findings": 1094,
+        "modules": 58,
+        "parse_failures": 0
+      },
+      "limitations": [
+        "CommonJS and ESM binding relationships were recovered from inert syntax and resolved only within the inventoried artifact container.",
+        "Graph coverage is incomplete; unavailable facts remain explicit and must not be read as absence.",
+        "JavaScript and HTML were parsed as inert text; bundle bootstrap code was never executed.",
+        "Static imports, entrypoints, workers, endpoints, and storage relationships do not prove runtime execution.",
+        "Static paths and relationships may remain unresolved when expressions are dynamic or obfuscated.",
+        "Webpack/Rspack factories were recovered from AST literals; REA did not invoke push handlers or bundle bootstrap code."
+      ]
+    },
+    {
+      "name": "trace-electron-api",
+      "rea_version": "6.7.0",
+      "command": "rea trace-application-feature",
+      "input": "seed string __electronApi on preload evidence",
+      "evidence_id": "ev_bd42241253f4f1f61c94b8a017ad100e6f1e9995cdec82d6bdb56bb06f8b52ba",
+      "output_sha256": "5549336e6e797b4e79e0f0d2912993bf8f1c94d768b27adc1ac5ce6d55414b56",
+      "output_bytes": 6019041,
+      "summary": {
+        "matched_seeds": 1241,
+        "traced_nodes": 1384,
+        "traced_edges": 1640,
+        "terminal_paths": 3,
+        "native_handoffs": 0,
+        "observed_facts": 270,
+        "inferred_facts": 2757,
+        "unknown_facts": 0,
+        "unavailable_facts": 0
+      },
+      "coverage": {
+        "status": "partial",
+        "source_graph_status": "partial",
+        "total_seed_matches": 1241
+      },
+      "limitations": [
+        "A trace reports graph relationships, not proof that code executed or that a feature is reachable in every state.",
+        "Native handoffs never open a binary or invoke a provider automatically; snapshot reuse remains provider/profile/target exact.",
+        "Static, native, passive-runtime, inferred, and unknown facts retain their original authority in the returned graph.",
+        "The source application graph is incomplete; unmatched seeds and frontiers remain unknown."
+      ]
+    },
+    {
+      "name": "trace-preload-clipboard",
+      "rea_version": "6.7.0",
+      "command": "rea trace-application-feature",
+      "input": "seed string notion:clipboard:write on preload evidence",
+      "evidence_id": "ev_675632fafeda66b453cc867d564745aba1dbbfa67b135460b2488b6a9f21a95a",
+      "output_sha256": "f0541674fe6a76afed8fdd284968b4897a882683bd1f8560853b738e0003a12d",
+      "output_bytes": 2084,
+      "summary": {
+        "matched_seeds": 0,
+        "traced_nodes": 0,
+        "traced_edges": 0,
+        "terminal_paths": 0,
+        "native_handoffs": 0,
+        "observed_facts": 0,
+        "inferred_facts": 0,
+        "unknown_facts": 0,
+        "unavailable_facts": 0
+      },
+      "coverage": {
+        "status": "no-match",
+        "source_graph_status": "partial",
+        "total_seed_matches": 0
+      },
+      "limitations": [
+        "No graph entity matched the literal seed; this is not evidence that the feature is absent.",
+        "The source application graph is incomplete; unmatched seeds and frontiers remain unknown."
+      ]
+    },
+    {
+      "name": "trace-blocks-mime",
+      "rea_version": "6.7.0",
+      "command": "rea trace-application-feature",
+      "input": "seed string text/_notion-blocks-v3-production on web-editor evidence",
+      "evidence_id": "ev_6c177d9a8ddc4408f6d2db9c925ecb53cd6b7676eb960228bea4e917d3835758",
+      "output_sha256": "077676cef6010c9c4e15e7d540aab50793ce42cd423d479000b764f6078b01fb",
+      "output_bytes": 2106,
+      "summary": {
+        "matched_seeds": 0,
+        "traced_nodes": 0,
+        "traced_edges": 0,
+        "terminal_paths": 0,
+        "native_handoffs": 0,
+        "observed_facts": 0,
+        "inferred_facts": 0,
+        "unknown_facts": 0,
+        "unavailable_facts": 0
+      },
+      "coverage": {
+        "status": "no-match",
+        "source_graph_status": "partial",
+        "total_seed_matches": 0
+      },
+      "limitations": [
+        "No graph entity matched the literal seed; this is not evidence that the feature is absent.",
+        "The source application graph is incomplete; unmatched seeds and frontiers remain unknown."
+      ]
+    },
+    {
+      "name": "trace-notionvc",
+      "rea_version": "6.7.0",
+      "command": "rea trace-application-feature",
+      "input": "seed string notionvc on web-editor evidence",
+      "evidence_id": "ev_d590b084d2dde923f54fa019e2e8cd17bd3cd695edc6cd75b4c57e88723a9578",
+      "output_sha256": "9fa0e2c0af471f334b650a7acda4635291a26ebf308f1bb73b8d70f6b5d9f0c7",
+      "output_bytes": 2056,
+      "summary": {
+        "matched_seeds": 0,
+        "traced_nodes": 0,
+        "traced_edges": 0,
+        "terminal_paths": 0,
+        "native_handoffs": 0,
+        "observed_facts": 0,
+        "inferred_facts": 0,
+        "unknown_facts": 0,
+        "unavailable_facts": 0
+      },
+      "coverage": {
+        "status": "no-match",
+        "source_graph_status": "partial",
+        "total_seed_matches": 0
+      },
+      "limitations": [
+        "No graph entity matched the literal seed; this is not evidence that the feature is absent.",
+        "The source application graph is incomplete; unmatched seeds and frontiers remain unknown."
+      ]
+    }
+  ]
+}
