@@ -106,11 +106,11 @@ function colorFrom(e: HTMLElement): Color | undefined {
   return undefined;
 }
 
-export function htmlInline(nodes: Node[], marks: Marks = {}): RichText {
+export function htmlInline(nodes: Node[], marks: Marks = {}, opts: { preserveWhitespace?: boolean } = {}): RichText {
   const out: Span[] = [];
   const walk = (n: Node, m: Marks) => {
     if (n instanceof TextNode) {
-      const t = n.text.replace(/[ \t\r\n]+/g, " ");
+      const t = opts.preserveWhitespace ? n.text : n.text.replace(/[ \t\r\n]+/g, " ");
       if (t) out.push({ text: decodeEntities(t), marks: { ...m } });
       return;
     }
@@ -137,7 +137,7 @@ export function htmlInline(nodes: Node[], marks: Marks = {}): RichText {
   for (const n of nodes) walk(n, marks);
   // Trim leading/trailing collapsible space like a browser would.
   const rt = normalize(out);
-  if (rt.length) {
+  if (rt.length && !opts.preserveWhitespace) {
     const first = rt[0]!;
     if (!first.equation && !first.mention) first.text = first.text.replace(/^ +/, "");
     const last = rt[rt.length - 1]!;
