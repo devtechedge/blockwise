@@ -4,3 +4,5 @@ export * from "./ids.js";
 export * from "./doc.js";
 export * from "./history.js";
 export * from "./commands.js";
+export * from "./workspace.js";
+export * from "./storage.js";
