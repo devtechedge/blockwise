@@ -3,3 +3,4 @@ export * from "./blocks.js";
 export * from "./ids.js";
 export * from "./doc.js";
 export * from "./history.js";
+export * from "./commands.js";
