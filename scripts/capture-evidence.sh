@@ -4,7 +4,7 @@
 # Downloads Notion's public installer and three public web chunks into ./.capture (git ignored).
 set -euo pipefail
 OUT="${1:-.capture}"
-mkdir -p "$OUT/web-editor" "$OUT/rea-out"
+mkdir -p "$OUT/web-editor" "$OUT/web-paste" "$OUT/rea-out"
 cd "$OUT"
 
 # 1. Desktop installer, NSIS payload, app.asar
@@ -17,10 +17,15 @@ npx -y @electron/asar extract app/resources/app.asar asar
 for f in 9073-319c74553d1d495c.js 11906-2b10cc89fc0f0830.js clipboardActions-13707130644731f1.js; do
   curl -sSf -o "web-editor/$f" "https://www.notion.so/_assets/$f"
 done
+# HTML paste parser, export renderer and the equation token class (added 2026-10-22)
+for f in 26751-bb69ee3e637e8a6b.js exportJsxRenderer-94ed7e495b8f5b69.js UISpacePermissionGroupToken-fe36ed2c124c7c4b.js; do
+  curl -sSf -o "web-paste/$f" "https://www.notion.so/_assets/$f"
+done
 
 # 3. REA analysis
 rea analyze-javascript-application asar/.webpack/renderer/tab_browser_view --format json > rea-out/preload.json
 rea analyze-javascript-application web-editor --format json > rea-out/web-editor.json
+(mkdir -p web-paste-rea && cp web-paste/26751-*.js web-paste/exportJsxRenderer-*.js web-paste-rea/ && rea analyze-javascript-application web-paste-rea --format json > rea-out/web-paste.json)
 
 # 4. REA feature traces
 trace() { # $1 evidence file, $2 seed, $3 output name
@@ -31,5 +36,8 @@ trace rea-out/preload.json __electronApi trace-electron-api
 trace rea-out/preload.json notion:clipboard:write trace-preload-clipboard
 trace rea-out/web-editor.json text/_notion-blocks-v3-production trace-blocks-mime
 trace rea-out/web-editor.json notionvc trace-notionvc
+trace rea-out/web-paste.json data-notion-inline-equation trace-paste-equation
+trace rea-out/web-paste.json data-notion-highlight trace-paste-highlight
+trace rea-out/web-paste.json notion-text-equation-token trace-paste-equation-class
 
-sha256sum notion-setup.exe app/resources/app.asar web-editor/*.js rea-out/*.json
+sha256sum notion-setup.exe app/resources/app.asar web-editor/*.js web-paste/*.js rea-out/*.json
