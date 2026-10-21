@@ -99,3 +99,14 @@ describe("transport", () => {
     expect(typeof createNotionApi).toBe("function");
   });
 });
+
+describe("block colors over the API", () => {
+  it("writes and reads the official color field on text blocks", async () => {
+    const { fromApiBlock, toApiBlock } = await import("../src/blocks.js");
+    const input: BlockInput = { type: "heading_2", text: text("h"), props: { color: "green_background" } };
+    const api = toApiBlock(input) as { type: string; heading_2: { color: string } };
+    expect(api.heading_2.color).toBe("green_background");
+    expect(fromApiBlock({ id: "x", type: "heading_2", has_children: false, heading_2: { rich_text: [{ type: "text", plain_text: "h", text: { content: "h" }, annotations: {} }], color: "green_background" } } as never)).toMatchObject({ props: { color: "green_background" } });
+    expect(fromApiBlock({ id: "x", type: "paragraph", has_children: false, paragraph: { rich_text: [], color: "default" } } as never)!.props).toBeUndefined();
+  });
+});
