@@ -2,7 +2,7 @@
 import { useEffect, useRef } from "react";
 import { getBlock, pageTitle, opInsert, opUpdate, plain, type Doc } from "@blockwise/core";
 import { apply, getState, redo, setSelection, undo, useApp } from "@/lib/store";
-import { copySelection, deleteSelection, duplicateSelection, moveSelection, pasteBlocks, readClipboard, topLevelSelection } from "@/lib/actions";
+import { copySelection, deleteSelection, isInlinePaste, pasteAtTop, duplicateSelection, moveSelection, pasteBlocks, readClipboard, topLevelSelection } from "@/lib/actions";
 import { BlockList } from "./Block";
 import { SlashMenu } from "./SlashMenu";
 import { InlineToolbar } from "./InlineToolbar";
@@ -97,6 +97,17 @@ export function Editor({ doc }: { doc: Doc }) {
           data-placeholder="Untitled"
           aria-label="Page title"
           onInput={(e) => apply([opUpdate(doc, doc.rootId, { text: (e.currentTarget.innerText.trim() ? [{ text: e.currentTarget.innerText.replace(/\n/g, " ") }] : []) })], "title")}
+          onPaste={(e) => {
+            // Multi block pastes go into the body instead of flattening into the title.
+            const data = readClipboard(e.nativeEvent.clipboardData ?? new DataTransfer());
+            if (isInlinePaste(data)) {
+              e.preventDefault();
+              document.execCommand("insertText", false, (data["text/plain"] ?? "").replace(/\s+/g, " "));
+              return;
+            }
+            e.preventDefault();
+            pasteAtTop(data);
+          }}
           onKeyDown={(e) => {
             if (e.key === "Enter" || (e.key === "ArrowDown")) {
               e.preventDefault();

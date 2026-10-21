@@ -212,4 +212,25 @@ export function pasteBlocks(data: ClipboardData, afterId: string): boolean {
   return true;
 }
 
+/** Paste blocks at the top of the page body, e.g. when the caret is in the title. */
+export function pasteAtTop(data: ClipboardData): boolean {
+  const d = doc();
+  const first = getBlock(d, d.rootId).children[0];
+  if (first) {
+    const fb = getBlock(d, first);
+    if (fb.type === "paragraph" && plain(fb.text) === "" && !fb.children.length) return pasteBlocks(data, first);
+  }
+  const { blocks, source } = decodeClipboard(data);
+  if (!blocks.length) return false;
+  const ops: Op[] = [];
+  let cur = d;
+  let at = 0;
+  let lastId = "";
+  for (const input of blocks) { const op = opInsert(cur, d.rootId, at++, input); ops.push(op); cur = applyOp(cur, op); lastId = (op as { blocks: { id: string }[] }).blocks[0]!.id; }
+  const last = getBlock(cur, lastId);
+  apply(ops, undefined, TEXT_TYPES.has(last.type) ? { id: lastId, offset: length(last.text) } : undefined);
+  toast(`Pasted ${blocks.length} block${blocks.length === 1 ? "" : "s"} from ${source === "notion-blocks" ? "Notion block data" : source === "html" ? "HTML" : "text"}`);
+  return true;
+}
+
 export { isInlinePaste };
