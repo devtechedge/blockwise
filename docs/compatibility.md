@@ -32,10 +32,10 @@ Bold, italic, underline, strikethrough, inline code, links and text or backgroun
 
 | Direction | Verified live | Fixed after, needs re-run |
 | --- | --- | --- |
-| Blockwise to Notion | Run 1: heading, nested bullets, numbered list, quote, code with language, bold, italic, underline, strike, inline code, link. Run 2: plain Ctrl+V, toggle, to-dos and the other block types | Background and text highlight (`data-notion-highlight`), inline equation (`data-notion-inline-equation`), block colors |
+| Blockwise to Notion | Run 1: heading, nested bullets, numbered list, quote, code with language, bold, italic, underline, strike, inline code, link. Run 2: plain Ctrl+V, toggle, to-dos and the other block types | Run 3: inline equation, inline text color. Still to confirm: background highlight, block colors |
 | Notion to Blockwise | To-do, heading, rich text paragraph, nested bullet, numbered list, quote, code (through Notion's block payload) | Toggle (reader keeps toggle and children, regression tested), multi block paste into the title |
 
-Run 2 (2026-10-22) still lost the highlight and pasted inline equations as text; both now use the attributes Notion's paste parser reads and need run 3. Clipboard v3 columns above describe Blockwise reading Notion's payload; Blockwise writes the same schema under its own MIME.
+Run 3 (2026-10-22) confirmed inline equations and text colors (`data-notion-highlight="orange"` arrived as orange text). A background highlight (`*_background`) still needs run 4, because the demo text in run 3 was a text color shown with a wrong yellow background in Blockwise itself. Clipboard v3 columns above describe Blockwise reading Notion's payload; Blockwise writes the same schema under its own MIME.
 
 ## Database property types
 
@@ -46,11 +46,11 @@ Title, text, number, select, multi select, date (including Notion's `October 21,
 | Package | Tests |
 | --- | --- |
 | @blockwise/core | 26 |
-| @blockwise/notion-format | 46 |
+| @blockwise/notion-format | 49 |
 | @blockwise/database | 10 |
 | @blockwise/interop | 11 |
 | @blockwise/notion-sync (mocked API only) | 9 |
 | @blockwise/web unit | 3 |
-| @blockwise/web Playwright | 12 |
+| @blockwise/web Playwright | 13 |
 
-All pass in CI. Open item: live run 3 of the paste check for highlights, inline equations and block colors.
+All pass in CI. Open item: live run 4 for background highlights and block colors.

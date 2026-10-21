@@ -35,6 +35,8 @@ You need a Notion account (a free one is fine) and a desktop browser or the Noti
 
 Run 2 (2026-10-22, Notion web): plain Ctrl+V worked; toggle, to-dos and the other block types were native. The yellow highlight was still lost (inline `background-color` is ignored) and the inline equation arrived as plain text `e^{i\pi}+1=0`. Fixed after: highlights and block colors carry `data-notion-highlight` with Notion's color names, and inline equations carry `data-notion-inline-equation`.
 
-Run 3: copy the Welcome page from "Every block type" through the callout and the to-dos, press plain Ctrl+V in Notion, and check the toggle, the yellow highlight and the callout.
+Run 3 (2026-10-22, Notion web): inline equations rendered natively and every block type stayed native with plain Ctrl+V. The word "colour" arrived as orange text. That was correct: the demo page stores it as orange text color, and Notion received `data-notion-highlight="orange"`. The bug was in Blockwise's own display, which drew `<mark class="highlight-orange">` with the browser's default yellow `<mark>` background, so it looked like a yellow highlight. Fixed after: marks have no default background, `highlight-*` classes draw text colors as text and `*_background` as backgrounds, and the demo page gains a real yellow background "highlight" next to "colour".
+
+Run 4: copy the Welcome page from "Every block type" through the callout and the to-dos, press plain Ctrl+V in Notion, and check that "colour" is orange text and "highlight" has a yellow background.
 
 If you want to keep a real capture as a fixture, save the clipboard flavours as JSON under `packages/notion-format/fixtures/clipboard/` with a `live-` prefix, append `sha256sum <file>` output to `evidence/fixtures.sha256`, and run `node scripts/verify-evidence.mjs`. Remove any workspace or user ids you do not want to publish first.
