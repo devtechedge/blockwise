@@ -1,14 +1,14 @@
 :root {
-  --bg: #ffffff; --fg: #37352f; --muted: #787774; --side: #f7f7f5; --hover: rgba(55,53,47,.08);
-  --border: rgba(55,53,47,.16); --accent: #2f6fde; --sel: rgba(35,131,226,.18); --code: #f7f6f3; --panel: #fff;
+  --bg: #eef1f5; --fg: #1d2430; --muted: #5f6b7a; --side: #e3e8ee; --hover: rgba(55,53,47,.08);
+  --border: rgba(55,53,47,.16); --accent: #2f6fde; --sel: rgba(35,131,226,.18); --code: #e3e8ee; --panel: #f7f9fb;
   --shadow: 0 6px 24px rgba(15,15,15,.15);
   --gray: #787774; --brown: #9f6b53; --orange: #d9730d; --yellow: #cb912f; --green: #448361; --blue: #337ea9; --purple: #9065b0; --pink: #c14c8a; --red: #d44c47;
   --gray-bg: #f1f1ef; --brown-bg: #f4eeee; --orange-bg: #fbecdd; --yellow-bg: #fbf3db; --green-bg: #edf3ec; --blue-bg: #e7f3f8; --purple-bg: #f6f3f9; --pink-bg: #faf1f5; --red-bg: #fdebec;
   color-scheme: light;
 }
 [data-theme="dark"] {
-  --bg: #191919; --fg: #e6e6e4; --muted: #9b9b9b; --side: #202020; --hover: rgba(255,255,255,.07);
-  --border: rgba(255,255,255,.13); --accent: #529cca; --sel: rgba(35,131,226,.3); --code: #262626; --panel: #252525;
+  --bg: #171b21; --fg: #e3e8ee; --muted: #94a0ae; --side: #1e232b; --hover: rgba(255,255,255,.07);
+  --border: rgba(255,255,255,.13); --accent: #529cca; --sel: rgba(35,131,226,.3); --code: #232933; --panel: #232933;
   --shadow: 0 6px 24px rgba(0,0,0,.5);
   --gray-bg: #2f2f2f; --brown-bg: #4a3228; --orange-bg: #5c3b23; --yellow-bg: #56452f; --green-bg: #243d30; --blue-bg: #143a4e; --purple-bg: #3c2d49; --pink-bg: #4e2c3c; --red-bg: #522e2a;
   color-scheme: dark;
@@ -43,7 +43,8 @@ a { color: inherit; }
 .menu-wrap { position: relative; }
 .menu { position: absolute; left: 8px; bottom: 100%; background: var(--panel); box-shadow: var(--shadow); border-radius: 6px; padding: 4px; z-index: 20; min-width: 190px; }
 .menu button { display: block; width: 100%; text-align: left; padding: 6px 10px; }
-.editor { flex: 1; overflow: auto; padding: 60px 96px 30vh; position: relative; }
+.main-col { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.editor { flex: 1; overflow: auto; padding: 24px 96px 30vh; position: relative; }
 .editor.empty { color: var(--muted); }
 .page-head, .blocks, .page-tail { max-width: 760px; margin: 0 auto; }
 .page-icon { font-size: 64px; line-height: 1; margin-bottom: 8px; }
@@ -170,3 +171,20 @@ a { color: inherit; }
 .callout.bg-purple_background { background: var(--purple-bg); }
 .callout.bg-pink_background { background: var(--pink-bg); }
 .callout.bg-red_background { background: var(--red-bg); }
+
+/* top bar and theme toggle */
+.topbar { display: flex; align-items: center; justify-content: space-between; height: 48px; padding: 0 14px 0 20px; flex: none; font-size: 14px; color: var(--muted); }
+.crumb { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.top-actions { display: flex; gap: 6px; }
+.theme-toggle { position: relative; width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; border-radius: 8px; color: var(--fg); }
+.theme-toggle svg { position: absolute; transition: opacity .3s, transform .3s, filter .3s; }
+.theme-toggle .icon-sun, .theme-toggle[data-dark="false"] .icon-moon { opacity: 1; transform: scale(1); filter: blur(0); }
+.theme-toggle[data-dark="false"] .icon-sun, .theme-toggle[data-dark="true"] .icon-moon { opacity: 0; transform: scale(.25); filter: blur(4px); }
+/* overlay hover reveal scrollbars on inner panes */
+.sidebar, .editor, .slash-menu, .db-scroll, .table-wrap, .code { scrollbar-width: thin; scrollbar-color: transparent transparent; }
+.sidebar:hover, .editor:hover, .slash-menu:hover, .db-scroll:hover, .table-wrap:hover, .code:hover,
+.sidebar:focus-within, .db-scroll:focus-within { scrollbar-color: rgba(120,132,148,.55) transparent; }
+.sidebar::-webkit-scrollbar, .editor::-webkit-scrollbar, .slash-menu::-webkit-scrollbar, .db-scroll::-webkit-scrollbar, .table-wrap::-webkit-scrollbar { width: 8px; height: 8px; }
+.sidebar::-webkit-scrollbar-thumb, .editor::-webkit-scrollbar-thumb, .slash-menu::-webkit-scrollbar-thumb, .db-scroll::-webkit-scrollbar-thumb, .table-wrap::-webkit-scrollbar-thumb { background: transparent; border-radius: 4px; }
+.sidebar:hover::-webkit-scrollbar-thumb, .editor:hover::-webkit-scrollbar-thumb, .slash-menu:hover::-webkit-scrollbar-thumb, .db-scroll:hover::-webkit-scrollbar-thumb, .table-wrap:hover::-webkit-scrollbar-thumb { background: rgba(120,132,148,.55); }
+::-webkit-scrollbar-button { display: none; }
