@@ -101,7 +101,7 @@ export function subtreeToRecordMap(doc: Doc, id: string, parentId: string, opts:
   return { recordMap, rootId: idOf(id) };
 }
 
-export function recordToInput(get: (id: string) => NotionRecord | undefined, id: string, seen = new Set<string>()): BlockInput | null {
+export function recordToInput(get: (id: string) => NotionRecord | undefined, id: string, seen = new Set<string>(), keepIds = false): BlockInput | null {
   if (seen.has(id)) return null;
   seen.add(id);
   const r = get(id);
@@ -109,13 +109,13 @@ export function recordToInput(get: (id: string) => NotionRecord | undefined, id:
   const type = FROM_NOTION[r.type];
   const props = r.properties ?? {};
   const format = r.format ?? {};
-  const kids = (r.content ?? []).map((c) => recordToInput(get, c, seen)).filter((x): x is BlockInput => x !== null);
+  const kids = (r.content ?? []).map((c) => recordToInput(get, c, seen, keepIds)).filter((x): x is BlockInput => x !== null);
   if (!type) {
     // Unknown block types degrade to a paragraph that keeps their text.
     const t = fromTitle(props.title);
     return { type: "paragraph", text: t, ...(kids.length ? { children: kids } : {}) };
   }
-  const input: BlockInput = { type };
+  const input: BlockInput = keepIds ? { id: r.id, type } : { type };
   const p: NonNullable<BlockInput["props"]> = {};
   if (type === "equation") p.expression = fromTitle(props.title).map((s) => s.text).join("");
   else { const t = fromTitle(props.title); if (t.length) input.text = t; }
@@ -136,7 +136,8 @@ export function recordToInput(get: (id: string) => NotionRecord | undefined, id:
     children = (r.content ?? []).map((rid): BlockInput | null => {
       const row = get(rid);
       if (!row) return null;
-      return { type: "table_row", props: { cells: order.map((k) => fromTitle(row.properties?.[k])) } };
+      const cells = { cells: order.map((k) => fromTitle(row.properties?.[k])) };
+      return keepIds ? { id: row.id, type: "table_row", props: cells } : { type: "table_row", props: cells };
     }).filter((x): x is BlockInput => x !== null);
   }
   if (Object.keys(p).length) input.props = p;
@@ -144,7 +145,7 @@ export function recordToInput(get: (id: string) => NotionRecord | undefined, id:
   return input;
 }
 
-export function recordMapToInputs(recordMap: unknown, rootIds: string[]): BlockInput[] {
+export function recordMapToInputs(recordMap: unknown, rootIds: string[], keepIds = false): BlockInput[] {
   const rm = recordMap as Partial<RecordMapV3> & { block?: Record<string, { value?: { value?: NotionRecord } | NotionRecord }> };
   const get = (id: string): NotionRecord | undefined => {
     const entry = rm.block?.[id];
@@ -153,5 +154,5 @@ export function recordMapToInputs(recordMap: unknown, rootIds: string[]): BlockI
     // Version 3 nests value.value; older maps have value directly.
     return v && "value" in v && v.value && typeof v.value === "object" ? v.value : (v as NotionRecord);
   };
-  return rootIds.map((id) => recordToInput(get, id)).filter((x): x is BlockInput => x !== null);
+  return rootIds.map((id) => recordToInput(get, id, new Set(), keepIds)).filter((x): x is BlockInput => x !== null);
 }
